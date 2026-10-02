@@ -41,19 +41,50 @@
   --stop:#F0676D; --stop-soft:#3A1A1C;
 }
 *,*::before,*::after{box-sizing:inherit}
-html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 64px);scroll-behavior:smooth}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 110px);scroll-behavior:smooth}
 @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
 body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.55}
 img,svg{max-width:100%}
 a{color:inherit}
 :focus-visible{outline:3px solid var(--gold);outline-offset:2px}
 
-/* Nav */
-.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:var(--gold);color:#1E2733}
-.nav-inner{max-width:1120px;margin:0 auto;display:flex;align-items:center;gap:18px;padding:10px 20px;overflow-x:auto;white-space:nowrap}
-.nav b{font-family:var(--cond);font-size:20px;letter-spacing:.02em}
-.nav a{text-decoration:none;font-weight:600;font-size:15px;padding:4px 2px;border-bottom:2px solid transparent}
-.nav a:hover{border-bottom-color:#1E2733}
+/* Header: title bar + chapter bar */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--paper);box-shadow:0 1px 0 var(--line)}
+.nav-inner{max-width:1120px;margin:0 auto;padding:0 20px}
+.nav-top{background:var(--gold);color:#1E2733}
+.nav-top .nav-inner{display:flex;align-items:center;min-height:46px}
+.brand{font-family:var(--cond);font-size:21px;font-weight:700;letter-spacing:.01em;text-decoration:none;line-height:1.15;padding:6px 0}
+
+.chapter-bar .nav-inner{display:flex;flex-wrap:wrap;justify-content:space-between;gap:2px;padding-top:6px;padding-bottom:6px}
+.chapter-bar a{display:flex;align-items:center;justify-content:center;text-align:center;text-decoration:none;font-weight:600;font-size:15px;line-height:1.2;color:var(--muted);padding:8px 6px;border-radius:8px;white-space:nowrap}
+.chapter-bar a:hover{color:var(--ink);background:var(--panel)}
+.chapter-bar a[aria-current="page"]{color:var(--ink);background:var(--gold-soft);box-shadow:inset 0 -3px 0 var(--gold)}
+.chapters .chapter-bar .nav-inner{flex-wrap:nowrap}
+
+/* When the chapters don't fit on one line, lay them out as an even grid */
+.nav.rows .chapter-bar .nav-inner{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:4px}
+.nav.rows .chapter-bar a{white-space:normal}
+@media (max-width:860px){.nav.rows .chapter-bar .nav-inner{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media (max-width:760px){
+  /* Four rows would cover too much of a small screen, so the header stays at the top of the page instead of following the scroll */
+  .nav{position:relative}
+}
+@media (max-width:520px){
+  .brand{font-size:19px}
+  .nav.rows .chapter-bar .nav-inner{grid-template-columns:repeat(3,minmax(0,1fr));padding-left:12px;padding-right:12px}
+  .chapter-bar a{font-size:14px;padding:8px 4px;min-height:44px}
+}
+/* Chapters: only applied when JS is running, so the page still reads top to bottom without it */
+.chapters [data-chapter][hidden]{display:none}
+[data-chapter] h1:focus,[data-chapter] h2:focus{outline:none}
+.chapters [data-chapter]{min-height:calc(100vh - 220px)}
+.chapters section{padding-top:36px}
+.pager{display:flex;justify-content:space-between;gap:12px;margin-top:40px;padding-top:18px;border-top:1px solid var(--line)}
+.pager a{display:flex;flex-direction:column;text-decoration:none;padding:10px 14px;border:2px solid var(--line);border-radius:10px;min-width:0;max-width:48%}
+.pager a:hover{border-color:var(--gold)}
+.pager a.next{margin-left:auto;text-align:right}
+.pager small{color:var(--muted);font-size:13px;font-weight:600}
+.pager span{font-family:var(--cond);font-size:20px;font-weight:700;line-height:1.15}
 
 .wrap{max-width:1120px;margin:0 auto;padding:0 20px}
 section{padding:56px 0 8px}
@@ -264,26 +295,32 @@ table.pd tfoot td{font-weight:700;border-top:2px solid var(--ink)}
 @media (max-width:640px){.ladder{grid-template-columns:1fr}.ladder .step{border-radius:0!important}}
 </style>
 </head><body>
-<nav class="nav" aria-label="Sections">
-  <div class="nav-inner">
-    <b>ARC Travel &amp; Reimbursement</b>
-    <a href="#finder">Approval finder</a>
-    <a href="#calculators">Calculators</a>
-    <a href="#thresholds">Key numbers</a>
-    <a href="#workflows">Workflows</a>
-    <a href="#travel">Air, ground, lodging</a>
-    <a href="#meals">Meals</a>
-    <a href="#receipts">Receipts</a>
-    <a href="#nonreimb">Not reimbursable</a>
-    <a href="#compliance">Compliance</a>
-    <a href="#roles">Roles</a>
-    <a href="#outline">Outline</a>
+<nav class="nav" aria-label="Chapters">
+  <div class="nav-top">
+    <div class="nav-inner">
+      <a class="brand" href="#finder">ARC Travel &amp; Reimbursement</a>
+    </div>
+  </div>
+  <div class="chapter-bar" id="chapter-bar">
+    <div class="nav-inner">
+      <a href="#finder">Approval finder</a>
+      <a href="#calculators">Calculators</a>
+      <a href="#thresholds">Key numbers</a>
+      <a href="#workflows">Workflows</a>
+      <a href="#travel">Air, ground, lodging</a>
+      <a href="#meals">Meals</a>
+      <a href="#receipts">Receipts</a>
+      <a href="#nonreimb">Not reimbursable</a>
+      <a href="#compliance">Compliance</a>
+      <a href="#roles">Roles</a>
+      <a href="#outline">Outline</a>
+    </div>
   </div>
 </nav>
 
 <main class="wrap">
 
-<header class="hero" id="finder">
+<header class="hero" id="finder" data-chapter>
   <div class="bars" aria-hidden="true">
     <i style="height:100%;background:var(--gold)"></i><i style="height:70%;background:var(--pcard)"></i><i style="height:88%;background:var(--nopo)"></i><i style="height:55%;background:var(--po)"></i><i style="height:76%;background:var(--stop)"></i><i style="height:40%;background:var(--gold)"></i>
   </div>
@@ -336,7 +373,7 @@ table.pd tfoot td{font-weight:700;border-top:2px solid var(--ink)}
   </div>
 </header>
 
-<section id="calculators">
+<section id="calculators" data-chapter>
   <h2>Calculators</h2>
   <p class="lede">Check deadlines, pay dates, budget variance, advance settlement, per diem and mileage. Results are estimates under the policy’s rules; Finance makes the final determination.</p>
 
@@ -444,7 +481,7 @@ table.pd tfoot td{font-weight:700;border-top:2px solid var(--ink)}
   </div>
 </section>
 
-<section id="thresholds">
+<section id="thresholds" data-chapter>
   <h2>Key numbers at a glance</h2>
   <p class="lede">The deadlines, percentages and limits that come up most.</p>
   <div class="markers">
@@ -463,7 +500,7 @@ table.pd tfoot td{font-weight:700;border-top:2px solid var(--ink)}
   </div>
 </section>
 
-<section id="workflows">
+<section id="workflows" data-chapter>
   <h2>Approval workflows</h2>
   <p class="lede">Each request moves left to right in Deltek Costpoint. Use only the Overnight Travel (ORT) and Misc. Exp/Non-Overnight Travel categories.</p>
   <div class="tabs" role="tablist" aria-label="Workflow">
@@ -491,7 +528,7 @@ table.pd tfoot td{font-weight:700;border-top:2px solid var(--ink)}
   </div>
 </section>
 
-<section id="travel">
+<section id="travel" data-chapter>
   <h2>Air, ground and lodging</h2>
   <p class="lede">Pick the most economical option that still meets the business need.</p>
 
@@ -547,7 +584,7 @@ table.pd tfoot td{font-weight:700;border-top:2px solid var(--ink)}
   </div>
 </section>
 
-<section id="meals">
+<section id="meals" data-chapter>
   <h2>Meals and per diem</h2>
   <p class="lede">Per diem covers meals, taxes, tips and incidentals. No receipts needed, and nothing extra for food is paid on top.</p>
   <div class="tbl-wrap">
@@ -571,7 +608,7 @@ table.pd tfoot td{font-weight:700;border-top:2px solid var(--ink)}
   </div>
 </section>
 
-<section id="receipts">
+<section id="receipts" data-chapter>
   <h2>Receipts and documentation</h2>
   <p class="lede">No expense should be approved if a required receipt is missing.</p>
   <div class="tbl-wrap">
@@ -594,7 +631,7 @@ table.pd tfoot td{font-weight:700;border-top:2px solid var(--ink)}
   </div>
 </section>
 
-<section id="nonreimb">
+<section id="nonreimb" data-chapter>
   <h2>What ARC will and won’t pay</h2>
   <div class="cols">
     <div>
@@ -613,7 +650,7 @@ table.pd tfoot td{font-weight:700;border-top:2px solid var(--ink)}
   <p class="panel-note">Combining personal and business travel is allowed only when it adds no cost to ARC, with supervisor approval before booking when airfare is involved.</p>
 </section>
 
-<section id="compliance">
+<section id="compliance" data-chapter>
   <h2>Noncompliance and exceptions</h2>
   <p class="lede">Findings are counted per policy and reset two years after the first notice. Three or more across policies escalates discipline.</p>
   <div class="ladder">
@@ -628,7 +665,7 @@ table.pd tfoot td{font-weight:700;border-top:2px solid var(--ink)}
   </div>
 </section>
 
-<section id="roles">
+<section id="roles" data-chapter>
   <h2>Roles and responsibilities</h2>
   <div class="tbl-wrap">
     <table>
@@ -647,7 +684,7 @@ table.pd tfoot td{font-weight:700;border-top:2px solid var(--ink)}
   </div>
 </section>
 
-<section id="outline">
+<section id="outline" data-chapter>
   <h2>Policy outline</h2>
   <p class="lede">Section map of the source document, with the key point of each.</p>
   <details><summary>Introduction</summary><ul><li>Purpose: based on the State of Georgia Travel Policy; EA required for overnight or out-of-state travel</li><li>Authority: CFO interprets, with General Counsel and Chief Compliance Officer</li><li>Applicability: all employees, volunteers and others reimbursed; Board members per Bylaws; stricter grant rules supersede</li></ul></details>
@@ -887,5 +924,66 @@ document.querySelectorAll(".tabs button").forEach(b=>b.addEventListener("click",
   document.querySelectorAll(".tabs button").forEach(x=>x.setAttribute("aria-selected",x===b)); showWF(b.dataset.w);
 }));
 showWF("ea");
+})();
+// Chapters: show one section at a time
+(function(){
+  const chapters=[...document.querySelectorAll("[data-chapter]")];
+  const nav=document.querySelector(".nav");
+  const bar=document.getElementById("chapter-bar");
+  const row=bar.querySelector(".nav-inner");
+  const links=[...bar.querySelectorAll("a[href^='#']")];
+  if(!chapters.length) return;
+  links.forEach(a=>{a.dataset.label=a.textContent.trim();});
+  const titleOf=id=>{const a=links.find(l=>l.getAttribute("href")==="#"+id);return a?a.dataset.label:id;};
+  const baseTitle=document.title;
+  chapters.forEach((ch,i)=>{
+    const prev=chapters[i-1],next=chapters[i+1];
+    ch.insertAdjacentHTML("beforeend",`<nav class="pager" aria-label="Chapter navigation">${prev?`<a class="prev" href="#${prev.id}"><small>Previous</small><span>${titleOf(prev.id)}</span></a>`:""}${next?`<a class="next" href="#${next.id}"><small>Next</small><span>${titleOf(next.id)}</span></a>`:""}</nav>`);
+  });
+  document.documentElement.classList.add("chapters");
+
+  // Keep every chapter on one line when it fits; otherwise switch to an even multi-row grid
+  function fit(){
+    nav.classList.remove("rows");
+    nav.classList.toggle("rows",row.scrollWidth>row.clientWidth+1);
+  }
+  // Recheck only when the window size changes, at most once per frame
+  let pending=0;
+  window.addEventListener("resize",()=>{if(!pending)pending=requestAnimationFrame(()=>{pending=0;fit();});});
+  if(document.fonts&&document.fonts.ready) document.fonts.ready.then(fit);
+
+  function toTop(){try{window.scrollTo({top:0,left:0,behavior:"instant"});}catch(e){window.scrollTo(0,0);}}
+  function showChapter(id,fromNav){
+    const target=chapters.find(c=>c.id===id)||chapters[0];
+    chapters.forEach(c=>c.hidden=c!==target);
+    links.forEach(a=>{if(a.getAttribute("href")==="#"+target.id)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current");});
+    document.title=(target===chapters[0]?"":titleOf(target.id)+" | ")+baseTitle;
+    if(fromNav){
+      toTop();
+      const h=target.querySelector("h1,h2");
+      if(h){h.setAttribute("tabindex","-1");try{h.focus({preventScroll:true});}catch(e){}}
+      try{history.pushState({ch:target.id},"","#"+target.id);}catch(e){}
+    }
+  }
+  document.addEventListener("click",e=>{
+    const a=e.target.closest("a[href^='#']");
+    if(!a) return;
+    const id=a.getAttribute("href").slice(1);
+    if(!chapters.some(c=>c.id===id)) return;
+    e.preventDefault();
+    showChapter(id,true);
+  });
+  window.addEventListener("popstate",e=>{
+    let id=e.state&&e.state.ch;
+    if(!id){try{id=location.hash.slice(1);}catch(err){}}
+    showChapter(id,false); toTop();
+  });
+  let start="";
+  try{start=location.hash.slice(1);}catch(e){}
+  showChapter(start,false);
+  fit();
+  toTop();
+  // The browser jumps to a #chapter link after loading; bring the page back to the top so the chapter list shows
+  window.addEventListener("load",()=>setTimeout(()=>toTop(),0));
 })();
 </script></body></html>
