@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ARC Travel and Reimbursement Policy Quick Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --gold:#F7B51E; --gold-soft:#FFF3D1;
+  --ink:#1E2733; --muted:#5B6572; --line:#E2E5E9; --paper:#FFFFFF; --panel:#F6F7F9;
+  --pcard:#23918C; --pcard-soft:#E1F3F2;
+  --nopo:#4468B8; --nopo-soft:#E5ECF9;
+  --po:#7F9430; --po-soft:#EEF3DC;
+  --stop:#D9434A; --stop-soft:#FCE7E8;
+  --body:"Barlow", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --cond:"Barlow Condensed", "Arial Narrow", "Segoe UI", sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  color-scheme:light dark;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --gold:#F7B51E; --gold-soft:#3A2F12;
+    --ink:#ECEFF3; --muted:#A3ABB6; --line:#2E3742; --paper:#141A21; --panel:#1B232C;
+    --pcard:#47BDB7; --pcard-soft:#15302F;
+    --nopo:#7C9CE6; --nopo-soft:#1A2640;
+    --po:#AFC45A; --po-soft:#252D14;
+    --stop:#F0676D; --stop-soft:#3A1A1C;
+  }
+}
+:root[data-theme="dark"]{
+  --gold:#F7B51E; --gold-soft:#3A2F12;
+  --ink:#ECEFF3; --muted:#A3ABB6; --line:#2E3742; --paper:#141A21; --panel:#1B232C;
+  --pcard:#47BDB7; --pcard-soft:#15302F;
+  --nopo:#7C9CE6; --nopo-soft:#1A2640;
+  --po:#AFC45A; --po-soft:#252D14;
+  --stop:#F0676D; --stop-soft:#3A1A1C;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 64px);scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.55}
+img,svg{max-width:100%}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+
+/* Nav */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:var(--gold);color:#1E2733}
+.nav-inner{max-width:1120px;margin:0 auto;display:flex;align-items:center;gap:18px;padding:10px 20px;overflow-x:auto;white-space:nowrap}
+.nav b{font-family:var(--cond);font-size:20px;letter-spacing:.02em}
+.nav a{text-decoration:none;font-weight:600;font-size:15px;padding:4px 2px;border-bottom:2px solid transparent}
+.nav a:hover{border-bottom-color:#1E2733}
+
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+section{padding:56px 0 8px}
+h1,h2,h3{font-family:var(--cond);line-height:1.1;margin:0}
+h1{font-size:clamp(40px,7vw,72px);font-weight:700;letter-spacing:-.01em}
+h2{font-size:clamp(30px,4vw,40px);font-weight:700;margin-bottom:6px}
+h3{font-size:22px;font-weight:600}
+.lede{color:var(--muted);max-width:68ch;margin:6px 0 24px}
+p{max-width:72ch}
+
+/* Hero */
+.hero{padding:40px 0 24px;position:relative}
+.bars{display:flex;gap:6px;height:56px;align-items:flex-end;margin-bottom:22px}
+.bars i{display:block;width:14px;border-radius:2px;opacity:.85}
+.hero p.sub{font-size:19px;max-width:62ch;color:var(--muted);margin:14px 0 0}
+.hero-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:36px;align-items:start;margin-top:30px}
+@media (max-width:860px){.hero-grid{grid-template-columns:1fr}}
+.summary{border-left:6px solid var(--gold);padding:4px 0 4px 20px}
+.summary h3{margin-bottom:10px}
+.summary ul{margin:0;padding-left:20px}
+.summary li{margin:6px 0}
+
+/* Approval finder */
+.finder{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px}
+.finder h3{margin-bottom:4px}
+.finder .hint{color:var(--muted);font-size:15px;margin:0 0 16px}
+.field{margin-bottom:14px}
+.field label{display:block;font-weight:600;font-size:15px;margin-bottom:6px}
+.seg{display:flex;flex-wrap:wrap;gap:6px}
+.seg button{font:inherit;font-size:15px;font-weight:600;border:2px solid var(--line);background:var(--paper);color:var(--ink);padding:8px 12px;border-radius:8px;cursor:pointer}
+.seg button[aria-pressed="true"][data-m="pcard"]{border-color:var(--pcard);background:var(--pcard-soft)}
+.seg button[aria-pressed="true"][data-m="nopo"]{border-color:var(--nopo);background:var(--nopo-soft)}
+.seg button[aria-pressed="true"][data-m="po"]{border-color:var(--po);background:var(--po-soft)}
+.amount{display:flex;align-items:center;border:2px solid var(--line);border-radius:8px;background:var(--paper);max-width:260px}
+.amount span{padding:0 10px;font-weight:700;color:var(--muted)}
+.amount input{font:inherit;font-size:20px;font-weight:600;border:0;background:transparent;color:var(--ink);padding:8px 10px 8px 0;width:100%}
+.amount input:focus{outline:none}
+.amount:focus-within{border-color:var(--gold)}
+.check{display:flex;gap:8px;align-items:flex-start;font-size:15px;margin-top:8px}
+.check input{margin-top:4px;accent-color:var(--gold)}
+.chain{list-style:none;margin:18px 0 0;padding:0;counter-reset:s}
+.chain li{position:relative;padding:8px 12px 8px 44px;margin-bottom:6px;background:var(--paper);border:1px solid var(--line);border-radius:8px;font-size:15px}
+.chain li::before{counter-increment:s;content:counter(s);position:absolute;left:10px;top:8px;width:24px;height:24px;border-radius:50%;background:var(--ink);color:var(--paper);font-weight:700;font-size:13px;display:grid;place-items:center}
+.chain li b{display:block;font-size:16px}
+.chain li.added{border-color:var(--gold);background:var(--gold-soft)}
+.alerts{margin-top:12px;display:grid;gap:8px}
+.alert{font-size:14.5px;padding:10px 12px;border-radius:8px;border-left:4px solid var(--gold);background:var(--gold-soft)}
+.alert.stop{border-left-color:var(--stop);background:var(--stop-soft)}
+
+/* Threshold scale */
+.scale{position:relative;margin:28px 0 8px;padding-top:4px}
+.scale-track{display:grid;grid-template-columns:1fr 1fr 2.4fr;height:54px;border-radius:10px;overflow:hidden;border:1px solid var(--line)}
+.scale-track div{display:flex;align-items:center;justify-content:center;font-family:var(--cond);font-weight:600;font-size:18px;text-align:center;padding:0 6px}
+.t1{background:var(--pcard-soft)} .t2{background:var(--nopo-soft)} .t3{background:var(--po-soft)}
+.ticks{display:grid;grid-template-columns:1fr 1fr 2.4fr;margin-top:6px;font-weight:700;font-size:15px}
+.ticks span:last-child{display:flex;justify-content:space-between}
+.markers{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin-top:26px}
+.marker{border-top:4px solid var(--gold);padding-top:10px}
+.marker .amt{font-family:var(--cond);font-size:34px;font-weight:700;line-height:1}
+.marker ul{margin:8px 0 0;padding-left:18px;font-size:15px}
+.marker li{margin:4px 0}
+
+/* Tables */
+.tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;margin-top:10px}
+table{border-collapse:collapse;width:100%;min-width:640px;font-size:15.5px}
+th,td{padding:11px 14px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+thead th{background:var(--panel);font-family:var(--cond);font-size:18px;font-weight:600}
+tbody tr:last-child td{border-bottom:0}
+td.c,th.c{text-align:center}
+.pill{display:inline-block;font-weight:700;font-size:13.5px;padding:3px 10px;border-radius:99px;white-space:nowrap}
+.yes{background:var(--ink);color:var(--paper)}
+.cond{background:var(--gold-soft);color:var(--ink);border:1px solid var(--gold)}
+.no{color:var(--muted)}
+.opt{background:var(--panel);border:1px dashed var(--muted);color:var(--muted)}
+th.pc{border-bottom:4px solid var(--pcard)} th.np{border-bottom:4px solid var(--nopo)} th.wp{border-bottom:4px solid var(--po)}
+
+/* Flowcharts */
+.flow{display:flex;flex-direction:column;align-items:center;gap:0;margin-top:16px}
+.node{border:2px solid var(--ink);border-radius:10px;padding:12px 16px;background:var(--paper);text-align:center;max-width:420px;font-weight:600}
+.node small{display:block;font-weight:400;color:var(--muted);font-size:14px;margin-top:2px}
+.q{border-style:dashed;background:var(--panel)}
+.end{border-width:3px}
+.end.pc{border-color:var(--pcard);background:var(--pcard-soft)}
+.end.np{border-color:var(--nopo);background:var(--nopo-soft)}
+.end.wp{border-color:var(--po);background:var(--po-soft)}
+.end.st{border-color:var(--stop);background:var(--stop-soft)}
+.down{width:2px;height:26px;background:var(--ink);position:relative}
+.down::after{content:"";position:absolute;bottom:-1px;left:-5px;border:6px solid transparent;border-top:8px solid var(--ink);border-bottom:0}
+.lbl{font-size:13px;font-weight:700;color:var(--muted);margin:2px 0}
+.branch{display:grid;grid-template-columns:1fr 1fr;gap:18px;width:100%;max-width:880px;position:relative;padding-top:18px}
+.branch::before{content:"";position:absolute;top:0;left:25%;right:25%;height:2px;background:var(--ink)}
+.branch>div{display:flex;flex-direction:column;align-items:center;position:relative}
+.branch>div::before{content:"";width:2px;height:18px;background:var(--ink);position:absolute;top:-18px}
+@media (max-width:640px){
+  .branch{grid-template-columns:1fr;padding-top:0}
+  .branch::before,.branch>div::before{display:none}
+  .branch>div{border-left:3px solid var(--line);padding-left:10px;margin-top:10px}
+}
+
+/* Tabs for approval workflows */
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+.tabs button{font:inherit;font-weight:600;border:0;border-bottom:4px solid transparent;background:none;color:var(--muted);padding:8px 12px;cursor:pointer;font-size:16px}
+.tabs button[aria-selected="true"]{color:var(--ink)}
+.tabs button[data-t="pcard"][aria-selected="true"]{border-color:var(--pcard)}
+.tabs button[data-t="nopo"][aria-selected="true"]{border-color:var(--nopo)}
+.tabs button[data-t="po"][aria-selected="true"]{border-color:var(--po)}
+.pipe{display:flex;align-items:stretch;gap:0;margin-top:18px;overflow-x:auto;padding-bottom:8px}
+.stage{flex:1 0 170px;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px 14px;position:relative}
+.stage .who{font-family:var(--cond);font-size:19px;font-weight:700;line-height:1.1}
+.stage .when{display:inline-block;margin:6px 0;font-size:13px;font-weight:700;padding:2px 8px;border-radius:99px;background:var(--ink);color:var(--paper)}
+.stage .when.c{background:var(--gold);color:#1E2733}
+.stage p{font-size:14.5px;margin:0;color:var(--muted)}
+.arrow{flex:0 0 22px;display:grid;place-items:center;color:var(--muted);font-weight:700}
+.panel-note{font-size:14.5px;color:var(--muted);margin-top:8px}
+
+/* P-card */
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:22px;margin-top:10px}
+.box{border:1px solid var(--line);border-radius:12px;padding:18px}
+.box h3{margin-bottom:8px}
+.box ul{margin:0;padding-left:18px;font-size:15.5px}
+.box li{margin:5px 0}
+.no-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin-top:10px}
+.no-list div{background:var(--stop-soft);border:1px solid var(--stop);border-radius:8px;padding:10px 12px;font-weight:600;font-size:15px}
+.no-list div::before{content:"✕ ";color:var(--stop)}
+.builder{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end;margin-top:10px}
+.builder label{font-size:14px;font-weight:600;display:flex;flex-direction:column;gap:4px}
+.builder input,.builder select{font:inherit;font-size:16px;padding:7px 9px;border:2px solid var(--line);border-radius:8px;background:var(--paper);color:var(--ink);width:110px}
+.out{font-family:var(--cond);font-size:30px;font-weight:700;letter-spacing:.03em;margin-top:12px;padding:8px 14px;background:var(--gold-soft);border-radius:8px;display:inline-block}
+
+/* Controls */
+.sod{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:14px;border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+.sod div{padding:16px}
+.sod div:nth-child(1){background:var(--pcard-soft)}
+.sod div:nth-child(2){background:var(--nopo-soft)}
+.sod div:nth-child(3){background:var(--po-soft)}
+.sod b{font-family:var(--cond);font-size:22px;display:block}
+@media (max-width:640px){.sod{grid-template-columns:1fr}}
+
+/* Outline */
+details{border-bottom:1px solid var(--line);padding:10px 0}
+summary{cursor:pointer;font-weight:700;font-size:17px}
+details ul{margin:8px 0 4px;padding-left:22px;font-size:15.5px}
+.flag{border-left:4px solid var(--stop);background:var(--stop-soft);padding:14px 16px;border-radius:0 10px 10px 0;margin-top:14px}
+.flag ul{margin:6px 0 0;padding-left:20px;font-size:15.5px}
+footer{padding:48px 0 40px;color:var(--muted);font-size:14px}
+.seg button[aria-pressed="true"]{border-color:var(--gold);background:var(--gold-soft)}
+.tabs button[data-w][aria-selected="true"]{border-color:var(--gold)}
+.two-chains{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:520px){.two-chains{grid-template-columns:1fr}}
+.two-chains h4{font-family:var(--cond);font-size:18px;margin:14px 0 -8px}
+.chain li.skip{opacity:.6}
+.calc-tabs{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 0}
+.calc-tabs button{font:inherit;font-weight:600;font-size:15.5px;border:2px solid var(--line);background:var(--paper);color:var(--ink);padding:9px 14px;border-radius:10px 10px 0 0;border-bottom:0;cursor:pointer}
+.calc-tabs button[aria-selected="true"]{background:var(--panel);border-color:var(--gold)}
+.calc{background:var(--panel);border:2px solid var(--gold);border-radius:0 12px 12px 12px;padding:22px}
+.calc-grid{display:grid;grid-template-columns:minmax(240px,340px) 1fr;gap:28px}
+@media (max-width:820px){.calc-grid{grid-template-columns:1fr}}
+.inputs label{display:block;font-weight:600;font-size:15px;margin-bottom:14px}
+.inputs label.check{display:flex;font-weight:500}
+.inputs input[type=date],.inputs input[type=datetime-local],.inputs input[type=number]{display:block;font:inherit;font-size:16px;margin-top:6px;padding:8px 10px;border:2px solid var(--line);border-radius:8px;background:var(--paper);color:var(--ink);width:100%;max-width:260px}
+.inputs .amount{margin-top:6px}
+.opt-l{font-weight:400;color:var(--muted);font-size:13.5px}
+.row3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.row3 .amount input{font-size:16px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.kpi{background:var(--paper);border:1px solid var(--line);border-top:5px solid var(--ink);border-radius:8px;padding:12px 14px}
+.kpi span{display:block;font-size:14px;font-weight:600;color:var(--muted)}
+.kpi b{display:flex;flex-direction:column;align-items:flex-start;font-family:var(--cond);font-size:30px;line-height:1.1;margin:4px 0}
+.kpi small{color:var(--muted);font-size:13px}
+.kpi .sd{display:inline-block;margin:6px 0 8px;font-family:var(--body);font-size:15.5px;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:.03em;line-height:1.3;color:var(--ink);background:var(--gold-soft);border:1px solid var(--gold);border-radius:6px;padding:3px 10px}
+.kpi.info{border-top-color:var(--nopo)}
+.kpi.info .sd{background:var(--nopo-soft);border-color:var(--nopo)}
+.kpi.ok .sd{background:var(--pcard-soft);border-color:var(--pcard)}
+.kpi.bad .sd{background:var(--stop-soft);border-color:var(--stop)}
+.alert .sdi{font-variant-numeric:tabular-nums;color:var(--muted);font-weight:500}
+.kpi.ok{border-top-color:var(--pcard)} .kpi.warn{border-top-color:var(--gold)} .kpi.bad{border-top-color:var(--stop)}
+.timeline{position:relative;display:grid;grid-template-columns:40fr 19fr 21fr;margin:44px 0 8px;border-radius:8px;overflow:visible;font-weight:600;font-size:14px;text-align:center}
+.tl-seg{padding:10px 4px}
+.tl-seg small{font-weight:400}
+.tl-ok{background:var(--pcard-soft);border-radius:8px 0 0 8px}
+.tl-late{background:var(--gold-soft)}
+.tl-out{background:var(--stop-soft);border-radius:0 8px 8px 0}
+.tl-pin{position:absolute;top:-14px;bottom:-6px;width:3px;background:var(--ink);transform:translateX(-1px)}
+.tl-pin span{position:absolute;top:-20px;left:50%;transform:translateX(-50%);white-space:nowrap;font-size:12.5px;font-weight:700;background:var(--ink);color:var(--paper);padding:1px 7px;border-radius:99px}
+.alert.ok{border-left-color:var(--pcard);background:var(--pcard-soft)}
+.bar-wrap{margin:20px 0 6px;display:grid;gap:8px}
+.bar-row{display:grid;grid-template-columns:60px 1fr;align-items:center;font-weight:600;font-size:14px}
+.bar{position:relative;height:22px;background:var(--paper);border:1px solid var(--line);border-radius:6px}
+.bar i{position:absolute;left:0;top:0;bottom:0;background:var(--nopo);border-radius:5px}
+.bar i.act{background:var(--pcard)} .bar i.act.over{background:var(--stop)}
+.bar em{position:absolute;top:-4px;bottom:-4px;width:2px;background:var(--gold)}
+table.pd{min-width:520px}
+table.pd td,table.pd th{padding:8px 10px}
+table.pd input{accent-color:var(--gold);width:18px;height:18px}
+table.pd tfoot td{font-weight:700;border-top:2px solid var(--ink)}
+.yes-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px;margin-top:10px}
+.yes-list div{background:var(--pcard-soft);border:1px solid var(--pcard);border-radius:8px;padding:10px 12px;font-weight:600;font-size:15px}
+.yes-list div::before{content:"✓ ";color:var(--pcard)}
+.ladder{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:12px}
+.ladder .step{padding:16px;border:1px solid var(--line);font-size:15.5px}
+.ladder .step b{font-family:var(--cond);font-size:22px;display:block}
+.ladder .step:nth-child(1){background:var(--gold-soft);border-radius:12px 0 0 12px}
+.ladder .step:nth-child(2){background:color-mix(in srgb,var(--gold-soft) 50%,var(--stop-soft))}
+.ladder .step:nth-child(3){background:var(--stop-soft);border-radius:0 12px 12px 0}
+@media (max-width:640px){.ladder{grid-template-columns:1fr}.ladder .step{border-radius:0!important}}
+</style>
+</head><body>
+<nav class="nav" aria-label="Sections">
+  <div class="nav-inner">
+    <b>ARC Travel &amp; Reimbursement</b>
+    <a href="#finder">Approval finder</a>
+    <a href="#calculators">Calculators</a>
+    <a href="#thresholds">Key numbers</a>
+    <a href="#workflows">Workflows</a>
+    <a href="#travel">Air, ground, lodging</a>
+    <a href="#meals">Meals</a>
+    <a href="#receipts">Receipts</a>
+    <a href="#nonreimb">Not reimbursable</a>
+    <a href="#compliance">Compliance</a>
+    <a href="#roles">Roles</a>
+    <a href="#outline">Outline</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+<header class="hero" id="finder">
+  <div class="bars" aria-hidden="true">
+    <i style="height:100%;background:var(--gold)"></i><i style="height:70%;background:var(--pcard)"></i><i style="height:88%;background:var(--nopo)"></i><i style="height:55%;background:var(--po)"></i><i style="height:76%;background:var(--stop)"></i><i style="height:40%;background:var(--gold)"></i>
+  </div>
+  <h1>Travel and Reimbursement Policy</h1>
+  <p class="sub">A quick guide to ARC’s Expense Authorization, Travel and Reimbursement Policy: when you need approval, who signs, what ARC will pay for, and the deadlines that decide whether you get reimbursed. Effective May 1, 2018, revised August 1, 2024.</p>
+
+  <div class="hero-grid">
+    <div class="summary">
+      <h3>The policy in eight points</h3>
+      <ul>
+        <li><strong>Overnight or out-of-state travel needs an approved Expense Authorization (EA)</strong> in Deltek Costpoint before anything is booked. An EA received after the travel date means no reimbursement.</li>
+        <li><strong>Expense Reports (ER) are due to Finance within 40 days</strong> of trip end or expense date. At 60 days the claim is not reimbursed; any special-exception payment after 60 days is taxable.</li>
+        <li><strong>Actual costs more than 10% over the EA</strong> need the ARC Director’s signature.</li>
+        <li><strong>Meals are paid as GSA per diem</strong>, not actual cost: 75% on first and last days, minus any meals provided.</li>
+        <li><strong>Lowest logical fare, least expensive lodging, most cost-effective ground transport.</strong> No upgrades at ARC’s expense.</li>
+        <li><strong>Travel goes on reimbursement, not the P-Card</strong>, except conference registration.</li>
+        <li><strong>Grant rules win</strong> when they are more restrictive than this policy.</li>
+        <li><strong>No one approves their own EA or ER.</strong> Repeated noncompliance escalates from verbal warning to a corrective action plan.</li>
+      </ul>
+    </div>
+
+    <div class="finder" aria-labelledby="finder-h">
+      <h3 id="finder-h">Who approves my EA and Expense Report?</h3>
+      <p class="hint">Choose the traveler’s role and trip type to see both approval chains.</p>
+      <div class="field">
+        <label id="r-lbl">Traveler</label>
+        <div class="seg" role="group" aria-labelledby="r-lbl" id="roleSeg">
+          <button type="button" data-r="emp" aria-pressed="true">Staff</button>
+          <button type="button" data-r="rdh" aria-pressed="false">Reports to Dept Head</button>
+          <button type="button" data-r="dh" aria-pressed="false">Department Head</button>
+          <button type="button" data-r="co" aria-pressed="false">Chief Officer</button>
+          <button type="button" data-r="ceo" aria-pressed="false">Executive Director / CEO</button>
+        </div>
+      </div>
+      <div class="field">
+        <label id="t-lbl">Trip type</label>
+        <div class="seg" role="group" aria-labelledby="t-lbl" id="tripSeg">
+          <button type="button" data-t="local" aria-pressed="false">In-region, day trip</button>
+          <button type="button" data-t="overnight" aria-pressed="true">Overnight or out of state</button>
+          <button type="button" data-t="intl" aria-pressed="false">International</button>
+        </div>
+        <label class="check"><input type="checkbox" id="over10"> Actual costs are more than 10% above the approved EA</label>
+      </div>
+      <div class="two-chains">
+        <div><h4>Expense Authorization</h4><ol class="chain" id="eaChain" aria-live="polite"></ol></div>
+        <div><h4>Expense Report</h4><ol class="chain" id="erChain" aria-live="polite"></ol></div>
+      </div>
+      <div class="alerts" id="finderAlerts" aria-live="polite"></div>
+    </div>
+  </div>
+</header>
+
+<section id="calculators">
+  <h2>Calculators</h2>
+  <p class="lede">Check deadlines, pay dates, budget variance, advance settlement, per diem and mileage. Results are estimates under the policy’s rules; Finance makes the final determination.</p>
+
+  <div class="calc-tabs" role="tablist" aria-label="Calculators">
+    <button role="tab" data-c="deadline" aria-selected="true">Deadlines and pay date</button>
+    <button role="tab" data-c="settle" aria-selected="false">EA variance and advances</button>
+    <button role="tab" data-c="perdiem" aria-selected="false">Meal per diem</button>
+    <button role="tab" data-c="mileage" aria-selected="false">Mileage</button>
+  </div>
+
+  <!-- Deadline calculator -->
+  <div class="calc" id="c-deadline">
+    <div class="calc-grid">
+      <div class="inputs">
+        <label>Travel start date<input type="date" id="d-start"></label>
+        <label>Trip end date (or date expense incurred)<input type="date" id="d-end"></label>
+        <label>Date EA reached Finance <span class="opt-l">optional</span><input type="date" id="d-ea"></label>
+        <label>Date and time ER reaches Finance <span class="opt-l">optional</span><input type="datetime-local" id="d-er"></label>
+        <label class="check"><input type="checkbox" id="d-ceo"> Traveler is the Executive Director / CEO</label>
+      </div>
+      <div class="results">
+        <div class="kpis">
+          <div class="kpi info"><span>EA due to Finance</span><b id="k-ea">—</b><small>Before the travel date</small></div>
+          <div class="kpi ok"><span>ER on-time deadline</span><b id="k-40">—</b><small>Day 40</small></div>
+          <div class="kpi bad"><span>No reimbursement from</span><b id="k-60">—</b><small>Day 60</small></div>
+        </div>
+        <div class="timeline" aria-hidden="true">
+          <div class="tl-seg tl-ok">Days 1–40<br><small>On time</small></div>
+          <div class="tl-seg tl-late">Days 41–59<br><small>Late: CFO discretion</small></div>
+          <div class="tl-seg tl-out">Day 60+<br><small>Not reimbursed</small></div>
+          <div class="tl-pin" id="tl-pin"><span id="tl-pin-l">Today</span></div>
+        </div>
+        <div class="alerts" id="d-alerts" aria-live="polite"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Settlement calculator -->
+  <div class="calc" id="c-settle" hidden>
+    <div class="calc-grid">
+      <div class="inputs">
+        <label>Approved EA amount<div class="amount"><span>$</span><input id="s-ea" inputmode="decimal" value="1,800"></div></label>
+        <label>Actual total trip expenses<div class="amount"><span>$</span><input id="s-act" inputmode="decimal" value="2,050"></div></label>
+        <label>Of that, paid directly by ARC <span class="opt-l">registration, direct-billed hotel</span><div class="amount"><span>$</span><input id="s-direct" inputmode="decimal" value="650"></div></label>
+        <label>Travel advance received<div class="amount"><span>$</span><input id="s-adv" inputmode="decimal" value="500"></div></label>
+        <label>Advances currently outstanding (including this one)<input id="s-n" type="number" min="0" max="10" value="1" style="max-width:120px"></label>
+      </div>
+      <div class="results">
+        <div class="kpis">
+          <div class="kpi" id="s-k1"><span>Variance from EA</span><b id="s-var">—</b><small id="s-var-s"></small></div>
+          <div class="kpi" id="s-k2"><span id="s-net-l">Net due</span><b id="s-net">—</b><small id="s-net-s"></small></div>
+        </div>
+        <div class="bar-wrap" aria-hidden="true">
+          <div class="bar-row"><span>EA</span><div class="bar"><i id="b-ea"></i><em id="b-10" title="EA + 10%"></em></div></div>
+          <div class="bar-row"><span>Actual</span><div class="bar"><i id="b-act" class="act"></i></div></div>
+        </div>
+        <div class="alerts" id="s-alerts" aria-live="polite"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Per diem calculator -->
+  <div class="calc" id="c-perdiem" hidden>
+    <div class="calc-grid">
+      <div class="inputs">
+        <p class="panel-note" style="margin-top:0">Enter the GSA rates for the city where each night is spent. The defaults are placeholders, not current GSA rates.</p>
+        <label>Total daily M&amp;IE rate<div class="amount"><span>$</span><input id="p-rate" inputmode="decimal" value="30"></div></label>
+        <div class="row3">
+          <label>Breakfast<div class="amount"><span>$</span><input id="p-b" inputmode="decimal" value="6"></div></label>
+          <label>Lunch<div class="amount"><span>$</span><input id="p-l" inputmode="decimal" value="10"></div></label>
+          <label>Dinner<div class="amount"><span>$</span><input id="p-d" inputmode="decimal" value="14"></div></label>
+        </div>
+        <label>Nights on travel status<input id="p-n" type="number" min="1" max="30" value="3" style="max-width:120px"></label>
+      </div>
+      <div class="results">
+        <p class="panel-note" style="margin-top:0">Check any meal provided by a conference, host or hotel. It is deducted before the 75% proration on first and last days.</p>
+        <div class="tbl-wrap"><table class="pd" id="p-table"></table></div>
+        <div class="alerts" id="p-alerts"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mileage calculator -->
+  <div class="calc" id="c-mileage" hidden>
+    <div class="calc-grid">
+      <div class="inputs">
+        <label>Round-trip miles driven for this business trip<input id="m-miles" type="number" min="0" value="80" style="max-width:160px"></label>
+        <label>Normal round-trip commute (home to primary workstation)<input id="m-comm" type="number" min="0" value="60" style="max-width:160px"></label>
+        <label>Current IRS mileage rate (per mile)<div class="amount"><span>$</span><input id="m-rate" inputmode="decimal" placeholder="Enter current IRS rate"></div></label>
+        <label>Tolls and parking<div class="amount"><span>$</span><input id="m-tolls" inputmode="decimal" value="0"></div></label>
+        <label class="check"><input type="checkbox" id="m-wknd"> Weekend or holiday, outside normal schedule</label>
+        <label class="check"><input type="checkbox" id="m-home"> Primary workstation is my residence</label>
+        <label class="check"><input type="checkbox" id="m-allow"> I receive an executive vehicle allowance</label>
+      </div>
+      <div class="results">
+        <div class="kpis">
+          <div class="kpi"><span>Commute deduction</span><b id="m-ded">—</b><small>miles</small></div>
+          <div class="kpi ok"><span>Reimbursable miles</span><b id="m-rm">—</b><small>miles</small></div>
+          <div class="kpi"><span>Estimated reimbursement</span><b id="m-amt">—</b><small id="m-amt-s">mileage + tolls/parking</small></div>
+        </div>
+        <div class="alerts" id="m-alerts"></div>
+        <p class="panel-note">Policy example: Duluth resident, 60-mile commute, drives 80 miles to a meeting and home. Reimbursable: 20 miles. Direction of travel doesn’t matter; the commute is always subtracted on workdays.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="thresholds">
+  <h2>Key numbers at a glance</h2>
+  <p class="lede">The deadlines, percentages and limits that come up most.</p>
+  <div class="markers">
+    <div class="marker"><div class="amt">Before travel</div><ul><li>EA due to Finance, signed by all approvers, before anything is booked.</li></ul></div>
+    <div class="marker"><div class="amt">40 days</div><ul><li>ER must reach Finance with completed signatures.</li></ul></div>
+    <div class="marker"><div class="amt">60 days</div><ul><li>ER not considered for reimbursement.</li><li>Special-exception payments become taxable (W-2).</li></ul></div>
+    <div class="marker"><div class="amt">10%</div><ul><li>Actual over EA by more than this needs the ARC Director’s signature.</li></ul></div>
+    <div class="marker"><div class="amt">75%</div><ul><li>Per diem on first and last day of overnight and international travel.</li></ul></div>
+    <div class="marker"><div class="amt">24 hours</div><ul><li>Maximum early arrival or late stay around an event without a justification memo.</li><li>Rental limit without written authorization.</li></ul></div>
+    <div class="marker"><div class="amt">$25</div><ul><li>Receipt required for any single transaction over this amount.</li><li>Parking, tolls, transit, taxis and airport vans under $25 don’t need one.</li></ul></div>
+    <div class="marker"><div class="amt">4 hours</div><ul><li>Away outside the region to earn day-trip meal per diem.</li><li>Agenda length to justify an employee group meal.</li></ul></div>
+    <div class="marker"><div class="amt">$1,000</div><ul><li>Combined cap on up to 3 outstanding advances per traveler.</li></ul></div>
+    <div class="marker"><div class="amt">7 days</div><ul><li>Minimum trip length for laundry or cleaning to be reimbursable.</li></ul></div>
+    <div class="marker"><div class="amt">Tue 12 PM</div><ul><li>ERs received by Finance before then are paid by EFT that Friday.</li></ul></div>
+    <div class="marker"><div class="amt">3 years</div><ul><li>Receipt retention after the travel date.</li></ul></div>
+  </div>
+</section>
+
+<section id="workflows">
+  <h2>Approval workflows</h2>
+  <p class="lede">Each request moves left to right in Deltek Costpoint. Use only the Overnight Travel (ORT) and Misc. Exp/Non-Overnight Travel categories.</p>
+  <div class="tabs" role="tablist" aria-label="Workflow">
+    <button role="tab" data-w="ea" aria-selected="true">Expense Authorization</button>
+    <button role="tab" data-w="er" aria-selected="false">Expense Report</button>
+    <button role="tab" data-w="ceo" aria-selected="false">Executive Director / CEO</button>
+    <button role="tab" data-w="exc" aria-selected="false">Policy exception</button>
+  </div>
+  <div id="wf" role="tabpanel"></div>
+
+  <h3 style="margin-top:34px">Approval matrix by traveler</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Traveler</th><th>Expense Authorization</th><th>Expense Report</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Staff</strong></td><td>Supervisor › Budget Manager › Department Head › Finance</td><td>Supervisor › Budget Manager › Finance</td></tr>
+        <tr><td><strong>Reports to Department Head</strong></td><td>Budget Manager › Department Head › Finance</td><td>Department Head (as supervisor) › Budget Manager › Finance</td></tr>
+        <tr><td><strong>Department Head</strong></td><td>Budget Manager › Chief Officer › Finance</td><td>Budget Manager › Chief Officer › Finance</td></tr>
+        <tr><td><strong>Chief Officer</strong></td><td>Budget Manager › CEO or designee › Finance</td><td>Budget Manager › CEO or designee › Finance</td></tr>
+        <tr><td><strong>Executive Director / CEO</strong></td><td>No approval; designee submits and routes to Finance</td><td>Designee submits within 40 days; quarterly Board Chair review</td></tr>
+        <tr><td><strong>Any traveler, international</strong></td><td>Add advance approval: ED/CEO for employees, Board Chair for the ED/CEO</td><td>Attach dated advance approval</td></tr>
+        <tr><td><strong>Any traveler, policy exception</strong></td><td>CFO gives final approval</td><td>—</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="travel">
+  <h2>Air, ground and lodging</h2>
+  <p class="lede">Pick the most economical option that still meets the business need.</p>
+
+  <h3>Getting there: choosing ground transportation</h3>
+  <div class="flow">
+    <div class="node q">Out-of-state trip?</div>
+    <div class="branch">
+      <div><span class="lbl">Yes</span><div class="node end wp">Common carrier (air or rail)<small>Unless another method is documented as cheaper or more practical</small></div></div>
+      <div><span class="lbl">No</span>
+        <div class="node q">Is an ARC fleet vehicle available?</div>
+        <div class="branch">
+          <div><span class="lbl">Yes</span><div class="node end pc">Use the fleet vehicle<small>Unless supervisor documents in advance it isn’t efficient. Transit riders and carpoolers get priority.</small></div></div>
+          <div><span class="lbl">No</span><div class="node end np">Transit if feasible, then rental or personal vehicle<small>Personal vehicle only when other options aren’t reasonable</small></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cols" style="margin-top:30px">
+    <div class="box">
+      <h3>Air travel</h3>
+      <ul>
+        <li><strong>Lowest logical airfare</strong> from refundable, non-penalty fares.</li>
+        <li><strong>No business or first class</strong> domestically, except Alaska and Hawaii. International business class with advance approval.</li>
+        <li><strong>Fly America Act:</strong> federally funded international trips use U.S. carriers or code-shares.</li>
+        <li><strong>First checked bag</strong> reimbursed; extra or overweight bags need a business reason.</li>
+        <li><strong>Not paid:</strong> priority seating, upgrades, airline clubs.</li>
+        <li><strong>Cancel</strong> at least 1 hour before departure; use credits within a year, for ARC business only.</li>
+      </ul>
+    </div>
+    <div class="box">
+      <h3>Vehicles</h3>
+      <ul>
+        <li><strong>Fleet:</strong> book on the intranet Vehicle Booking Calendar with a real business purpose in the Title field.</li>
+        <li><strong>Return</strong> with at least half a tank, by 6:30 AM the next business day if kept overnight.</li>
+        <li><strong>Enterprise account 03HARC1:</strong> in-state rentals include coverage, so decline extra insurance; opt in outside Georgia.</li>
+        <li><strong>Rentals</strong> over 24 hours need prior written authorization, copied to General Services.</li>
+        <li><strong>Personal car:</strong> IRS rate, minus normal commute; tolls and reasonable parking extra.</li>
+        <li><strong>Never reimbursed:</strong> tickets, fines or moving violations in any vehicle.</li>
+      </ul>
+    </div>
+    <div class="box">
+      <h3>Lodging</h3>
+      <ul>
+        <li><strong>Outside the region only</strong>; in-region lodging needs written CFO pre-approval.</li>
+        <li><strong>Ask for government or conference rate</strong>; at a conference hotel, the conference rate is the limit.</li>
+        <li><strong>Georgia hotels:</strong> submit the Hotel Occupancy Tax Exemption Form at check-in. The $5 per night state fee still applies.</li>
+        <li><strong>Avoid nonrefundable rates</strong> unless conference lodging requires them; no-shows aren’t paid.</li>
+        <li><strong>Resort fees</strong> are reimbursable; paid upgrades are not.</li>
+        <li><strong>Shared room:</strong> the person who paid claims the full cost.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="meals">
+  <h2>Meals and per diem</h2>
+  <p class="lede">Per diem covers meals, taxes, tips and incidentals. No receipts needed, and nothing extra for food is paid on top.</p>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Situation</th><th>What you get</th><th>Conditions</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Overnight travel, full days</strong></td><td>100% of GSA per diem</td><td>Rate is where the night is spent</td></tr>
+        <tr><td><strong>Overnight travel, first and last day</strong></td><td>75% of GSA per diem</td><td>Deduct provided meals first, then apply 75%. Departure and return times don’t matter.</td></tr>
+        <tr><td><strong>Day trip outside the region</strong></td><td>Per diem for each meal in the period</td><td>Away more than 4 hours; rate set by meeting location; deduct provided meals</td></tr>
+        <tr><td><strong>Day trip inside the region</strong></td><td>Meal per diem</td><td>Only after hours, on weekends or holidays (for example, an evening public hearing)</td></tr>
+        <tr><td><strong>Meals provided by conference, host or hotel</strong></td><td>Deduct that meal’s rate</td><td>Unless a documented dietary need couldn’t be accommodated</td></tr>
+        <tr><td><strong>International</strong></td><td>State Department per diem, 75% first and last day</td><td>Ground transport and Section 5 items paid separately</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="cols" style="margin-top:24px">
+    <div class="box"><h3>Employee group meals</h3><ul><li>Only when staff must stay on site: emergencies or mandatory meetings with 4+ hours of agenda and no meal break.</li><li>Written approval by Department Manager or higher before the event.</li><li>Invoice preferred; P-Card allowed.</li><li>Not for lunch meetings where the meal is the meeting.</li><li>Document: itemized receipt with tip, purpose, attendee and RSVP lists.</li></ul></div>
+    <div class="box"><h3>ARC-hosted events</h3><ul><li>Food for mostly non-employee audiences (Board, committees) follows procurement rules and funder allowability.</li><li>Don’t buy food just for staff.</li><li>Invoice preferred; P-Card allowed.</li><li>Document: itemized receipt with tip, purpose, attendee and RSVP lists.</li></ul></div>
+    <div class="box"><h3>Executive-hosted meals</h3><ul><li>Executive leadership and approved employees only, for advisors or visiting dignitaries.</li><li>Not for routine visits by funders, jurisdictions or consultants.</li><li>Reimbursement only, never the P-Card; no alcohol.</li><li>Prior ED/CEO approval and a budgeted line item.</li></ul></div>
+  </div>
+</section>
+
+<section id="receipts">
+  <h2>Receipts and documentation</h2>
+  <p class="lede">No expense should be approved if a required receipt is missing.</p>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Expense</th><th class="c">Receipt required?</th></tr></thead>
+      <tbody>
+        <tr><td>Airfare, rail fare, hotel, rental car</td><td class="c"><span class="pill yes">Always</span></td></tr>
+        <tr><td>Registration fees, visa and passport fees</td><td class="c"><span class="pill yes">Always</span></td></tr>
+        <tr><td>Breakfast, lunch or dinner meetings (actual cost)</td><td class="c"><span class="pill yes">Always</span></td></tr>
+        <tr><td>Any other single transaction over $25</td><td class="c"><span class="pill yes">Always</span></td></tr>
+        <tr><td>Parking, tolls, transit, taxis, airport vans under $25</td><td class="c"><span class="pill cond">Not required</span></td></tr>
+        <tr><td>Meal per diem</td><td class="c"><span class="pill opt">Never</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="cols" style="margin-top:22px">
+    <div class="box"><h3>Every itemized receipt shows</h3><ul><li>Vendor name</li><li>Date of service</li><li>Description of goods or service</li><li>Amount for each item</li><li>Total paid</li></ul></div>
+    <div class="box"><h3>Every submission states</h3><ul><li>Specific business purpose</li><li>People involved and topics covered</li><li>Duties performed</li><li>Agenda or itinerary for multi-day EAs</li><li>Memo explaining any arrival or departure 24+ hours outside the event</li></ul></div>
+    <div class="box"><h3>P-Card and travel</h3><ul><li>Travel on the P-Card (other than registration) means escalating discipline and repayment by the cardholder.</li><li>The cost can then be claimed through an ER if allowable.</li><li>P-Card purchases without an itemized receipt are repaid by the employee.</li></ul></div>
+  </div>
+</section>
+
+<section id="nonreimb">
+  <h2>What ARC will and won’t pay</h2>
+  <div class="cols">
+    <div>
+      <h3>Reimbursable while on travel status</h3>
+      <div class="yes-list">
+        <div>Conference and registration fees</div><div>Business calls, internet, fax</div><div>Copies, postage, supplies</div><div>Baggage handling services</div><div>Passports, visas, required vaccinations</div><div>Currency conversion fees</div><div>Tolls, including Peach Pass</div><div>Transport to restaurants</div><div>Rides to and from the airport</div><div>Laundry on trips of 7+ days</div>
+      </div>
+    </div>
+    <div>
+      <h3>Never reimbursed</h3>
+      <div class="no-list">
+        <div>Alcohol</div><div>Entertainment, movies</div><div>Mini-bar</div><div>Upgrades of any kind</div><div>Priority seating</div><div>Club and membership dues</div><div>TSA PreCheck</div><div>Fines and tickets</div><div>Childcare, pet care</div><div>Clothing, toiletries</div><div>Grooming, spa, shoeshines</div><div>Gifts and souvenirs</div><div>Valet, when self-park exists</div><div>Travel insurance</div><div>Lost or stolen cash or property</div><div>Car washes</div><div>Commuting miles</div><div>Personal or vacation days</div>
+      </div>
+    </div>
+  </div>
+  <p class="panel-note">Combining personal and business travel is allowed only when it adds no cost to ARC, with supervisor approval before booking when airfare is involved.</p>
+</section>
+
+<section id="compliance">
+  <h2>Noncompliance and exceptions</h2>
+  <p class="lede">Findings are counted per policy and reset two years after the first notice. Three or more across policies escalates discipline.</p>
+  <div class="ladder">
+    <div class="step"><b>1st finding</b>Verbal warning from the direct supervisor, followed by written documentation</div>
+    <div class="step"><b>2nd finding</b>Written warning to the employee file; supervisor, Department Manager and Executive notified</div>
+    <div class="step"><b>3rd finding</b>Written warning in the personnel file and a Corrective Action Plan with the CFO and Talent Management</div>
+  </div>
+  <div class="cols" style="margin-top:24px">
+    <div class="box"><h3>Corrective Action Plan includes</h3><ul><li>The problem and its root cause</li><li>Who is accountable</li><li>Simple, measurable solutions with an owner each</li><li>Achievable deadlines</li><li>Progress monitoring</li></ul></div>
+    <div class="box"><h3>Requesting an exception</h3><ul><li><strong>With an EA:</strong> detail it in the EA and route normally; CFO gives final approval.</li><li><strong>Without an EA:</strong> written request from the cognizant Executive to the CFO before travel, with names, purpose, exception, justification, expense types and dates.</li><li>Exceptions cover only the named event and dates; after-the-fact and repeat requests are likely denied.</li></ul></div>
+    <div class="box"><h3>Accommodations</h3><ul><li>Department Heads can approve reasonable accommodations for travelers with disabilities, even at higher cost.</li><li>The approver documents and files the extra costs.</li></ul></div>
+  </div>
+</section>
+
+<section id="roles">
+  <h2>Roles and responsibilities</h2>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Role</th><th>Core responsibilities</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Employee</strong></td><td>Signs own EA and ER; knows the policy and grant rules; keeps receipts; alerts approvers; tracks the report through payment</td></tr>
+        <tr><td><strong>Supervisor or designee</strong></td><td>Validates scope, eligibility, reasonableness and documentation; attests that costs are allowable; warns the employee about late approvals and tax risk</td></tr>
+        <tr><td><strong>Budget Manager or designee</strong></td><td>Confirms budget capacity (reallocating within the cost center if needed) and grant eligibility; returns incomplete packages</td></tr>
+        <tr><td><strong>Department Head or Chief Officer</strong></td><td>Authorizes overnight and out-of-state travel on the EA; acts as supervisor-level approval on the ER when in the flow</td></tr>
+        <tr><td><strong>Finance</strong></td><td>Reviews for compliance, processes payment, maintains Deltek, trains staff, answers policy questions, flags taxable reimbursements</td></tr>
+        <tr><td><strong>Chief Financial Officer</strong></td><td>Final interpretation of the policy; approves exceptions, in-region lodging and late reimbursements</td></tr>
+        <tr><td><strong>Chief Compliance Officer</strong></td><td>Issues findings and warnings for noncompliance</td></tr>
+        <tr><td><strong>Board Chair</strong></td><td>Reviews ED/CEO travel quarterly; approves ED/CEO international travel</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="outline">
+  <h2>Policy outline</h2>
+  <p class="lede">Section map of the source document, with the key point of each.</p>
+  <details><summary>Introduction</summary><ul><li>Purpose: based on the State of Georgia Travel Policy; EA required for overnight or out-of-state travel</li><li>Authority: CFO interprets, with General Counsel and Chief Compliance Officer</li><li>Applicability: all employees, volunteers and others reimbursed; Board members per Bylaws; stricter grant rules supersede</li></ul></details>
+  <details><summary>General Provisions and Noncompliance</summary><ul><li>Key rules: sign your own EA and ER, never approve your own, 40/60-day deadlines, Tuesday cutoff and Friday EFT</li><li>Three-step findings ladder and Corrective Action Plan</li></ul></details>
+  <details><summary>Definitions and Policies Applying to All Travel</summary><ul><li>EA and ER approval workflows by role</li><li>Responsibilities of employee, supervisor, Budget Manager, Department Head, Finance</li><li>ED/CEO travel; documentation and the 24-hour arrival rule</li></ul></details>
+  <details><summary>Sections One to Three: Air, Ground, Lodging</summary><ul><li>Lowest logical airfare, class of service, international, cancellations, baggage</li><li>Fleet vehicles, Enterprise rentals, personal vehicles and mileage</li><li>Lodging rates, tax exemptions, cancellation, conference hotels</li></ul></details>
+  <details><summary>Sections Four and Five: Meals and Miscellaneous</summary><ul><li>GSA per diem, 75% first and last day, provided-meal deductions, day trips</li><li>Employee group meals, hosted events, executive-hosted meals</li><li>Reimbursable and non-reimbursable expense lists</li></ul></details>
+  <details><summary>Sections Six and Seven: Reimbursement and Exceptions</summary><ul><li>Advances, timing, submission, duplication, receipts, personal travel, accommodations</li><li>Exception procedures and CFO approval</li></ul></details>
+  <details><summary>Appendices</summary><ul><li>A: Business versus commuting miles, primary workstation types, worked examples</li><li>B: International approval authority, Fly America Act, per diem, currency conversion (foreign amount × conversion factor = USD)</li></ul></details>
+
+  <div class="flag">
+    <h3>Items worth clarifying in the next revision</h3>
+    <ul>
+      <li><strong>Day 60 is ambiguous.</strong> General Provisions bar reimbursement for ERs received “after 60 days”; Section 6.3 bars them at “60 days or more.” The calculators use the stricter reading.</li>
+      <li><strong>“ARC Director’s signature”</strong> for costs more than 10% over the EA is not a defined role.</li>
+      <li><strong>Tuesday cutoff exceptions</strong> go to the CFO in General Provisions but to the Finance Department in Section 6.3.</li>
+      <li><strong>Advances:</strong> up to 3 outstanding advances are allowed, but Section 6.2 also says any outstanding advance must be settled before another is issued.</li>
+      <li><strong>Broken cross-references:</strong> Sections 6.5 (receipts, now 6.6), 7.5 and 7.10 are cited but don’t exist; the incidentals definition says “See for further definition.” Sections 4.5, 4.6 and 4.8 and Section Three’s heading are missing from the table of contents.</li>
+      <li><strong>Missing recipient:</strong> executive-hosted meal reimbursements “shall be communicated to” no one named. The Primary Workstation definition still refers to a “State employee.”</li>
+      <li><strong>Policy names don’t match</strong> the Payment Policy: this document cites the “Purchasing and Procurement Policy” and “Purchasing and Procurement Guide.”</li>
+    </ul>
+  </div>
+</section>
+
+<footer>Summary of ARC Expense Authorization, Travel and Reimbursement Policy (effective May 1, 2018, revised August 1, 2024). The policy document controls in any conflict with this guide. Calculator results are estimates.</footer>
+</main>
+<script>
+(function(){
+const $ = id => document.getElementById(id);
+const num = v => parseFloat(String(v).replace(/[^0-9.\-]/g,"")) || 0;
+const usd = n => (n<0?"-":"") + Math.abs(n).toLocaleString("en-US",{style:"currency",currency:"USD"});
+const DOW = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+const fd = d => d ? `${DOW[d.getDay()]}, ${d.toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"})}` : "—";
+const fs = d => d ? `${String(d.getMonth()+1).padStart(2,"0")}/${String(d.getDate()).padStart(2,"0")}/${d.getFullYear()}` : "";
+const fb = d => d ? `${fd(d)} <span class="sdi">(${fs(d)})</span>` : "—";
+const kd = d => d ? `${fd(d)}<span class="sd" aria-label="${fs(d)}">${fs(d)}</span>` : "—";
+const pd = s => { if(!s) return null; const [y,m,d]=s.split("-").map(Number); return new Date(y,m-1,d); };
+const addDays = (d,n) => { const x=new Date(d); x.setDate(x.getDate()+n); return x; };
+const dayDiff = (a,b) => Math.round((new Date(b.getFullYear(),b.getMonth(),b.getDate()) - new Date(a.getFullYear(),a.getMonth(),a.getDate()))/864e5);
+const iso = d => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+const alertsHTML = arr => arr.map(a=>`<div class="alert ${a[0]}">${a[1]}</div>`).join("");
+function segGroup(id, attr, cb){
+  const btns = document.querySelectorAll(`#${id} button`);
+  btns.forEach(b=>b.addEventListener("click",()=>{btns.forEach(x=>x.setAttribute("aria-pressed",x===b)); cb(b.dataset[attr]);}));
+}
+const fmtMoneyOnBlur = el => el.addEventListener("blur",()=>{ if(el.value.trim()==="") return; el.value = num(el.value).toLocaleString("en-US",{maximumFractionDigits:2}); });
+
+/* ---------- Approval finder ---------- */
+let role="emp", trip="overnight";
+const EA = {
+  emp:[["Employee","Creates and signs the EA"],["Supervisor or designee","First review"],["Budget Manager or designee","Budget and grant eligibility"],["Department Head or designee","Authorizes the travel"],["Finance","Review and processing"]],
+  rdh:[["Employee","Creates and signs the EA"],["Budget Manager or designee","Budget and grant eligibility"],["Department Head","Authorizes the travel"],["Finance","Review and processing"]],
+  dh:[["Department Head","Creates and signs the EA"],["Budget Manager or designee","Budget and grant eligibility"],["Chief Officer","Authorizes the travel"],["Finance","Review and processing"]],
+  co:[["Chief Officer","Creates and signs the EA"],["Budget Manager or designee","Budget and grant eligibility"],["CEO or designee","Authorizes the travel"],["Finance","Review and processing"]],
+  ceo:[["ED’s designee","Submits the EA in Costpoint; no approval required"],["Finance","Receives and processes"]]
+};
+const ER = {
+  emp:[["Employee","Submits and signs the ER"],["Supervisor or designee","Validates expenses"],["Budget Manager or designee","Budget and grant eligibility"],["Finance","Final approval and payment"]],
+  rdh:[["Employee","Submits and signs the ER"],["Department Head","Serves as supervisor approval"],["Budget Manager or designee","Budget and grant eligibility"],["Finance","Final approval and payment"]],
+  dh:[["Department Head","Submits and signs the ER"],["Budget Manager or designee","Budget and grant eligibility"],["Chief Officer","Supervisor-level approval"],["Finance","Final approval and payment"]],
+  co:[["Chief Officer","Submits and signs the ER"],["Budget Manager or designee","Budget and grant eligibility"],["CEO or designee","Supervisor-level approval"],["Finance","Final approval and payment"]],
+  ceo:[["ED’s designee","Submits the ER within 40 days"],["Finance","Processes payment"],["Board Chair","Quarterly review of ED travel and expenses"]]
+};
+function renderFinder(){
+  const over = $("over10").checked;
+  let ea = EA[role].slice(), er = ER[role].slice(); const notes=[];
+  if(trip==="local"){
+    ea = [["Not required","In-region day travel needs no EA unless it involves extraordinary costs such as a hotel night"]];
+    notes.push(["","Still tell your supervisor you’ll be out of the office."]);
+  }
+  if(trip==="intl"){
+    const who = role==="ceo" ? ["Board Chair","Advance international approval, dated"] : ["Executive Director / CEO","Advance international approval, dated"];
+    ea.splice(ea.length-1,0,[who[0],who[1],1]);
+    notes.push(["","Federally funded flights must follow the Fly America Act (U.S. carrier or code-share). Business class allowed with advance approval."]);
+  }
+  if(over){
+    er.splice(er.length-1,0,["ARC Director","Signature required: actual is more than 10% over the EA",1]);
+    notes.push(["stop","Costs more than 10% above the EA need the ARC Director’s signature before Finance can pay. The policy doesn’t define this role, so confirm with Finance."]);
+  }
+  if(role==="ceo") notes.push(["","ED/CEO travel needs no approval, but the designee still files the EA and ER, and expenses go to the Board Chair quarterly."]);
+  if(trip!=="local") notes.push(["","Submit the EA to Finance before the travel date. A late EA means no reimbursement and no authorization to travel."]);
+  notes.push(["","No one may approve their own EA or ER."]);
+  const li = s => `<li class="${s[2]?"added":""}"><b>${s[0]}</b>${s[1]}</li>`;
+  $("eaChain").innerHTML = ea.map(li).join("");
+  $("erChain").innerHTML = er.map(li).join("");
+  $("finderAlerts").innerHTML = alertsHTML(notes);
+}
+segGroup("roleSeg","r",v=>{role=v;renderFinder();});
+segGroup("tripSeg","t",v=>{trip=v;renderFinder();});
+$("over10").addEventListener("change",renderFinder);
+renderFinder();
+
+/* ---------- Calculator tabs ---------- */
+document.querySelectorAll(".calc-tabs button").forEach(b=>b.addEventListener("click",()=>{
+  document.querySelectorAll(".calc-tabs button").forEach(x=>x.setAttribute("aria-selected",x===b));
+  ["deadline","settle","perdiem","mileage"].forEach(c=>$("c-"+c).hidden = c!==b.dataset.c);
+}));
+
+/* ---------- Deadline calculator ---------- */
+const today = new Date();
+$("d-end").value = iso(addDays(today,-12));
+$("d-start").value = iso(addDays(today,-15));
+function nextPayday(recv){
+  // Received before 12:00 PM Tuesday -> paid that Friday
+  let t = new Date(recv); t.setHours(12,0,0,0);
+  t.setDate(t.getDate() + ((2 - t.getDay() + 7) % 7));
+  if(t <= recv) t.setDate(t.getDate()+7);
+  return {cutoff:t, pay:addDays(t,3)};
+}
+function renderDeadline(){
+  const start=pd($("d-start").value), end=pd($("d-end").value), eaD=pd($("d-ea").value);
+  const erS=$("d-er").value, erD = erS ? new Date(erS) : null;
+  const ceo=$("d-ceo").checked, a=[];
+  $("k-ea").innerHTML = start ? kd(addDays(start,-1)) : "—";
+  if(!end){ $("k-40").innerHTML="—"; $("k-60").innerHTML="—"; $("d-alerts").innerHTML=alertsHTML([["","Enter the trip end date to see deadlines."]]); return; }
+  const d40=addDays(end,40), d60=addDays(end,60);
+  $("k-40").innerHTML=kd(d40); $("k-60").innerHTML=kd(d60);
+  if(start && eaD){
+    if(dayDiff(eaD,start)>=1) a.push(["ok",`EA reached Finance ${dayDiff(eaD,start)} day(s) before travel. On time.`]);
+    else a.push(["stop","EA reached Finance on or after the travel date. The policy says reimbursement is denied and travel is not authorized."]);
+  }
+  if(start && end && dayDiff(start,end)<0) a.push(["stop","Trip end date is before the start date."]);
+  const ref = erD || today, day = dayDiff(end,ref);
+  const pin=$("tl-pin"); const pos = Math.max(0,Math.min(80,day))/80*100;
+  pin.style.left = pos+"%"; const pl=$("tl-pin-l"); pl.style.left = pos<10 ? "0" : pos>90 ? "auto" : "50%"; pl.style.right = pos>90 ? "0" : "auto"; pl.style.transform = (pos<10||pos>90) ? "none" : "translateX(-50%)"; $("tl-pin-l").textContent = (erD?"ER received":"Today")+`: day ${day}`;
+  if(day<0) a.push(["",`${erD?"ER date":"Today"} is before the trip ended.`]);
+  else if(day<=40) a.push(["ok",`${erD?"ER arrives":"Today is"} on day ${day}. ${erD?"On time.":`You have ${40-day} day(s) left to get the signed ER to Finance.`}`]);
+  else if(day<60) a.push(["stop",`Day ${day}: past the 40-day deadline. The ER may not be paid. You can ask the CFO to pay it late; approval is at their discretion and may come with discipline. If it is processed at day 60 or later, it becomes taxable income on your W-2. ${60-day} day(s) remain before the final cutoff.`]);
+  else a.push(["stop",`Day ${day}: 60 days or more. The ER will not be considered for reimbursement. A special-exception payment after 60 days is taxable income.`]);
+  if(erD){
+    const p=nextPayday(erD);
+    a.push(["",`Estimated EFT pay date: <strong>${fd(p.pay)}</strong> <span class="sdi">(${fs(p.pay)})</span>. Finance cutoff: ${fb(p.cutoff)} at 12:00 PM, if all signatures and receipts are complete.`]);
+  } else {
+    const lastTue = new Date(d40); lastTue.setDate(lastTue.getDate()-((lastTue.getDay()-2+7)%7));
+    a.push(["",`To be paid without hitting day 40, the ER has to reach Finance by ${fb(d40)}. Arriving by noon on ${fb(lastTue)} means payment on ${fb(addDays(lastTue,3))}.`]);
+  }
+  a.push(["","The ER must account for everything: advances, costs ARC paid directly (registration, transportation) and out-of-pocket costs."]);
+  if(ceo) a.push(["","For the ED/CEO, the designee files the ER within the same 40 days, and the expenses go to the Board Chair for quarterly review."]);
+  $("d-alerts").innerHTML=alertsHTML(a);
+}
+["d-start","d-end","d-ea","d-er","d-ceo"].forEach(id=>$(id).addEventListener("input",renderDeadline));
+renderDeadline();
+
+/* ---------- Settlement calculator ---------- */
+["s-ea","s-act","s-direct","s-adv"].forEach(id=>fmtMoneyOnBlur($(id)));
+function renderSettle(){
+  const ea=num($("s-ea").value), act=num($("s-act").value), dir=num($("s-direct").value), adv=num($("s-adv").value), n=parseInt($("s-n").value)||0;
+  const a=[];
+  const varPct = ea>0 ? (act-ea)/ea*100 : 0;
+  $("s-var").textContent = ea>0 ? (varPct>=0?"+":"")+varPct.toFixed(1)+"%" : "—";
+  $("s-var-s").textContent = ea>0 ? `${usd(act-ea)} vs. EA; 10% line is ${usd(ea*1.1)}` : "Enter the EA amount";
+  $("s-k1").className = "kpi " + (varPct>10 ? "bad" : varPct>0 ? "warn" : "ok");
+  const oop = act - dir, net = oop - adv;
+  if(net>=0){ $("s-net-l").textContent="ARC reimburses you"; $("s-net").textContent=usd(net); $("s-net-s").textContent=`Out-of-pocket ${usd(oop)} minus advance ${usd(adv)}`; $("s-k2").className="kpi ok"; }
+  else { $("s-net-l").textContent="You refund ARC"; $("s-net").textContent=usd(-net); $("s-net-s").textContent="Unused advance, returned with the ER"; $("s-k2").className="kpi bad"; }
+  const max=Math.max(ea*1.1,act,1);
+  $("b-ea").style.width=(ea/max*100)+"%"; $("b-10").style.left=(ea*1.1/max*100)+"%";
+  $("b-act").style.width=(act/max*100)+"%"; $("b-act").classList.toggle("over",varPct>10);
+  if(ea>0 && varPct>10) a.push(["stop",`Actual is ${varPct.toFixed(1)}% over the EA. The ER needs the ARC Director’s signature.`]);
+  else if(ea>0) a.push(["ok","Within 10% of the EA. No additional signature needed for the variance."]);
+  if(dir>act) a.push(["stop","Direct-paid costs can’t exceed total trip expenses."]);
+  if(net<0) a.push(["",`Return ${usd(-net)} with the ER, or ask for a payroll deduction in the pay period after you return.`]);
+  if(adv>1000) a.push(["stop","Outstanding advances can’t total more than $1,000 per traveler."]);
+  if(n>3) a.push(["stop","No more than 3 outstanding advances per traveler."]);
+  if(n>1) a.push(["","Section 6.2 also says an outstanding advance must be settled before a new one is issued; confirm with Finance."]);
+  a.push(["","Advances cover up to 100% of the estimated lowest logical airfare. Hotel advances are paid as a check to the hotel."]);
+  $("s-alerts").innerHTML=alertsHTML(a);
+}
+["s-ea","s-act","s-direct","s-adv","s-n"].forEach(id=>$(id).addEventListener("input",renderSettle));
+renderSettle();
+
+/* ---------- Per diem calculator ---------- */
+["p-rate","p-b","p-l","p-d"].forEach(id=>fmtMoneyOnBlur($(id)));
+let provided = {};
+function buildPD(){
+  const n=Math.max(1,Math.min(30,parseInt($("p-n").value)||1)), days=n+1;
+  let rows="";
+  for(let i=0;i<days;i++){
+    const type = i===0?"First day":i===days-1?"Last day":"Full day";
+    rows+=`<tr><td>Day ${i+1}<br><small class="no">${type}</small></td>${["b","l","d"].map(m=>`<td class="c"><input type="checkbox" data-day="${i}" data-m="${m}" ${provided[i+m]?"checked":""} aria-label="Day ${i+1} ${m==="b"?"breakfast":m==="l"?"lunch":"dinner"} provided"></td>`).join("")}<td class="c" id="pd-${i}"></td></tr>`;
+  }
+  $("p-table").innerHTML=`<thead><tr><th>Day</th><th class="c">Breakfast provided</th><th class="c">Lunch provided</th><th class="c">Dinner provided</th><th class="c">Allowance</th></tr></thead><tbody>${rows}</tbody><tfoot><tr><td colspan="4">Total meal per diem</td><td class="c" id="pd-total"></td></tr></tfoot>`;
+  $("p-table").querySelectorAll("input").forEach(c=>c.addEventListener("change",()=>{provided[c.dataset.day+c.dataset.m]=c.checked;calcPD();}));
+  calcPD();
+}
+function calcPD(){
+  const rate=num($("p-rate").value), m={b:num($("p-b").value),l:num($("p-l").value),d:num($("p-d").value)};
+  const n=Math.max(1,parseInt($("p-n").value)||1), days=n+1; let total=0; const a=[];
+  for(let i=0;i<days;i++){
+    let ded=0; ["b","l","d"].forEach(k=>{ if(provided[i+k]) ded+=m[k]; });
+    const edge = i===0||i===days-1;
+    const amt = Math.max(0,rate-ded)*(edge?0.75:1);
+    total+=amt; $("pd-"+i).textContent=usd(amt);
+  }
+  $("pd-total").textContent=usd(total);
+  if(Math.abs(m.b+m.l+m.d-rate)>0.005 && m.b+m.l+m.d>rate) a.push(["stop","Meal amounts add up to more than the total rate. Check the GSA breakdown."]);
+  a.push(["","Formula: (daily rate − provided meals) × 75% on first and last days; full rate minus provided meals on other days. Policy example: ($30 − $10 lunch) × 75% = $15."]);
+  a.push(["","Arriving 24+ hours before the event may limit per diem for those days; Finance decides based on the EA memo."]);
+  $("p-alerts").innerHTML=alertsHTML(a);
+}
+["p-rate","p-b","p-l","p-d"].forEach(id=>$(id).addEventListener("input",calcPD));
+$("p-n").addEventListener("input",buildPD);
+buildPD();
+
+/* ---------- Mileage calculator ---------- */
+fmtMoneyOnBlur($("m-tolls"));
+function calcMiles(){
+  const miles=num($("m-miles").value), comm=num($("m-comm").value), rate=num($("m-rate").value), tolls=num($("m-tolls").value);
+  const wk=$("m-wknd").checked, home=$("m-home").checked, allow=$("m-allow").checked, a=[];
+  const ded = (wk||home) ? 0 : Math.min(comm,miles);
+  const rm = allow ? 0 : Math.max(0,miles-ded);
+  $("m-ded").textContent=ded.toLocaleString(); $("m-rm").textContent=rm.toLocaleString();
+  if(rate>0){ $("m-amt").textContent=usd(rm*rate+tolls); $("m-amt-s").textContent=`${rm} mi × ${usd(rate)} + ${usd(tolls)}`; }
+  else { $("m-amt").textContent="—"; $("m-amt-s").textContent="Enter the current IRS rate"; }
+  if(allow) a.push(["stop","Executives with a vehicle allowance get no mileage reimbursement. They may rent a car for overnight travel outside the 11-county region."]);
+  if(!wk && !home && miles<=comm && !allow) a.push(["","Business miles don’t exceed your normal commute, so there’s nothing to reimburse."]);
+  if(wk) a.push(["ok","Weekend or holiday outside your schedule: no commute deduction."]);
+  if(home) a.push(["ok","Your residence is your primary workstation, so there are no commuting miles to deduct."]);
+  a.push(["","The IRS rate covers gas, maintenance, insurance and depreciation; those aren’t claimed separately. Tolls and reasonable parking are added on top."]);
+  a.push(["","Multi-day trips: deduct the one-way commute only on scheduled workdays when you leave from or return home (see Appendix A, example 3)."]);
+  $("m-alerts").innerHTML=alertsHTML(a);
+}
+["m-miles","m-comm","m-rate","m-tolls","m-wknd","m-home","m-allow"].forEach(id=>$(id).addEventListener("input",calcMiles));
+calcMiles();
+
+/* ---------- Workflows ---------- */
+const WF = {
+  ea:{s:[["Employee","Before booking","Create the EA in Costpoint with agenda or itinerary"],["Supervisor","First review","Scope, eligibility, reasonableness"],["Budget Manager","Second review","Budget capacity and grant eligibility"],["Department Head","Third review","Authorizes overnight or out-of-state travel"],["Finance","Before travel date","Final review and processing"]],n:"Required for overnight or out-of-state travel. Include a memo if arriving or leaving 24+ hours outside the event."},
+  er:{s:[["Employee","Within 40 days","Submit with receipts and business purpose"],["Supervisor","Review","Attests transactions are allowable"],["Budget Manager","Review","Confirms funding source and documentation"],["ARC Director","If over EA by 10%+","Signature on the variance",1],["Finance","Final approval","Paid by EFT Friday if received by Tuesday noon"]],n:"Denied expenses become the employee’s personal expense."},
+  ceo:{s:[["ED’s designee","Before travel","Submits the EA in Costpoint, routed to Finance"],["Finance","Processing","No approval required for ED/CEO travel"],["ED’s designee","Within 40 days","Submits the ER"],["Board Chair","Quarterly","Reviews ED travel and related expenses"]],n:"International travel for the ED/CEO needs advance Board Chair approval."},
+  exc:{s:[["Employee","In advance","Detail the exception in the EA, or in a written request from the cognizant Executive"],["Normal EA approvers","If an EA applies","Route through the standard chain"],["Chief Financial Officer","Final","Approves or denies in writing"],["Employee","Before travel","Exception covers only the named event and dates"]],n:"After-the-fact and repeat requests are carefully reviewed and often denied. A denial doesn’t prevent resubmitting a new EA."}
+};
+function showWF(k){
+  $("wf").innerHTML=`<div class="pipe">${WF[k].s.map((s,i)=>`${i?'<div class="arrow" aria-hidden="true">›</div>':''}<div class="stage"><div class="who">${s[0]}</div><span class="when ${s[3]?"c":""}">${s[1]}</span><p>${s[2]}</p></div>`).join("")}</div><p class="panel-note">${WF[k].n}</p>`;
+}
+document.querySelectorAll(".tabs button").forEach(b=>b.addEventListener("click",()=>{
+  document.querySelectorAll(".tabs button").forEach(x=>x.setAttribute("aria-selected",x===b)); showWF(b.dataset.w);
+}));
+showWF("ea");
+})();
+</script></body></html>
