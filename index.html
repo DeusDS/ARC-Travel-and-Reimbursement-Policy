@@ -246,6 +246,19 @@ footer{padding:48px 0 40px;color:var(--muted);font-size:14px}
 .inputs label.check{display:flex;font-weight:500}
 .inputs input[type=date],.inputs input[type=datetime-local],.inputs input[type=number]{display:block;font:inherit;font-size:16px;margin-top:6px;padding:8px 10px;border:2px solid var(--line);border-radius:8px;background:var(--paper);color:var(--ink);width:100%;max-width:260px}
 .inputs .amount{margin-top:6px}
+.inputs input.dtext{display:block;font:inherit;font-size:16px;font-variant-numeric:tabular-nums;margin-top:6px;padding:8px 44px 8px 10px;border:2px solid var(--line);border-radius:8px;background:var(--paper);color:var(--ink);width:100%}
+.inputs input.dtext[aria-invalid="true"]{border-color:var(--stop)}
+.dfield{position:relative;max-width:260px}
+.dfield .calbtn{position:absolute;right:2px;bottom:2px;width:40px;height:calc(100% - 10px);display:flex;align-items:center;justify-content:center;color:var(--muted);pointer-events:none}
+.inputs .dfield .dpick{position:absolute;right:2px;bottom:2px;width:40px;height:calc(100% - 10px);margin:0;padding:0;border:0;opacity:0;cursor:pointer;max-width:none}
+.dfield:focus-within .calbtn{color:var(--ink)}
+.dfield .dpick:focus-visible + .calbtn{outline:2px solid var(--gold);outline-offset:-2px;border-radius:6px}
+.derr{display:block;font-size:13px;font-weight:500;color:var(--stop);margin-top:4px}
+.derr:empty{display:none}
+.inputs [hidden]{display:none}
+.inputs .seg-l{display:block;font-weight:600;font-size:15px;margin-bottom:6px}
+.inputs .seg{margin-bottom:16px}
+.inputs .seg button{font-size:14px;padding:7px 10px;text-align:left}
 .opt-l{font-weight:400;color:var(--muted);font-size:13.5px}
 .row3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
 .row3 .amount input{font-size:16px}
@@ -388,15 +401,21 @@ table.pd tfoot td{font-weight:700;border-top:2px solid var(--ink)}
   <div class="calc" id="c-deadline">
     <div class="calc-grid">
       <div class="inputs">
-        <label>Travel start date<input type="date" id="d-start"></label>
-        <label>Trip end date (or date expense incurred)<input type="date" id="d-end"></label>
-        <label>Date EA reached Finance <span class="opt-l">optional</span><input type="date" id="d-ea"></label>
-        <label>Date and time ER reaches Finance <span class="opt-l">optional</span><input type="datetime-local" id="d-er"></label>
+        <span class="seg-l" id="d-trip-l">Trip type</span>
+        <div class="seg" role="group" aria-labelledby="d-trip-l" id="d-tripSeg">
+          <button type="button" data-t="ovn" aria-pressed="true">Overnight or out of state</button>
+          <button type="button" data-t="dayout" aria-pressed="false">Day trip in Georgia, outside the Atlanta region</button>
+          <button type="button" data-t="dayin" aria-pressed="false">Day trip in the Atlanta region</button>
+        </div>
+        <label for="d-start-t">Travel start date<div class="dfield"><input type="text" class="dtext" id="d-start-t" inputmode="numeric" autocomplete="off" placeholder="mm/dd/yyyy"><input type="date" class="dpick" id="d-start" aria-label="Choose from calendar"><span class="calbtn" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></span></div><small class="derr" id="d-start-t-err" aria-live="polite"></small></label>
+        <label for="d-end-t">Trip end date (or date expense incurred)<div class="dfield"><input type="text" class="dtext" id="d-end-t" inputmode="numeric" autocomplete="off" placeholder="mm/dd/yyyy"><input type="date" class="dpick" id="d-end" aria-label="Choose from calendar"><span class="calbtn" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></span></div><small class="derr" id="d-end-t-err" aria-live="polite"></small></label>
+        <label for="d-ea-t" id="d-ea-wrap">Date EA reached Finance <span class="opt-l">optional</span><div class="dfield"><input type="text" class="dtext" id="d-ea-t" inputmode="numeric" autocomplete="off" placeholder="mm/dd/yyyy"><input type="date" class="dpick" id="d-ea" aria-label="Choose from calendar"><span class="calbtn" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></span></div><small class="derr" id="d-ea-t-err" aria-live="polite"></small></label>
+        <label for="d-er-t">Date and time ER reaches Finance <span class="opt-l">optional</span><div class="dfield"><input type="text" class="dtext" id="d-er-t" inputmode="numeric" autocomplete="off" placeholder="mm/dd/yyyy hh:mm am"><input type="datetime-local" class="dpick" id="d-er" aria-label="Choose from calendar"><span class="calbtn" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></span></div><small class="derr" id="d-er-t-err" aria-live="polite"></small></label>
         <label class="check"><input type="checkbox" id="d-ceo"> Traveler is the Executive Director / CEO</label>
       </div>
       <div class="results">
         <div class="kpis">
-          <div class="kpi info"><span>EA due to Finance</span><b id="k-ea">—</b><small>Before the travel date</small></div>
+          <div class="kpi info"><span>EA due to Finance</span><b id="k-ea">—</b><small id="k-ea-s">Before the travel date</small></div>
           <div class="kpi ok"><span>ER on-time deadline</span><b id="k-40">—</b><small>Day 40</small></div>
           <div class="kpi bad"><span>No reimbursement from</span><b id="k-60">—</b><small>Day 60</small></div>
         </div>
@@ -699,6 +718,7 @@ table.pd tfoot td{font-weight:700;border-top:2px solid var(--ink)}
     <h3>Items worth clarifying in the next revision</h3>
     <ul>
       <li><strong>Day 60 is ambiguous.</strong> General Provisions bar reimbursement for ERs received “after 60 days”; Section 6.3 bars them at “60 days or more.” The calculators use the stricter reading.</li>
+      <li><strong>EA scope for day trips:</strong> the Introduction and General Provisions require an EA only for overnight or out-of-state travel, but the employee responsibilities section says all out-of-region expenditures “should” be approved in advance with an EA, which would reach in-state day trips outside the region.</li>
       <li><strong>“ARC Director’s signature”</strong> for costs more than 10% over the EA is not a defined role.</li>
       <li><strong>Tuesday cutoff exceptions</strong> go to the CFO in General Provisions but to the Finance Department in Section 6.3.</li>
       <li><strong>Advances:</strong> up to 3 outstanding advances are allowed, but Section 6.2 also says any outstanding advance must be settled before another is issued.</li>
@@ -783,10 +803,84 @@ document.querySelectorAll(".calc-tabs button").forEach(b=>b.addEventListener("cl
   ["deadline","settle","perdiem","mileage"].forEach(c=>$("c-"+c).hidden = c!==b.dataset.c);
 }));
 
+/* ---------- Date fields: type a date or pick it from the calendar ---------- */
+const p2 = n => String(n).padStart(2,"0");
+function parseDateText(t, allow2){
+  t = t.trim();
+  let y,m,d,rest="";
+  let x = t.match(/^(\d{4})[-\/.](\d{1,2})[-\/.](\d{1,2})(.*)$/);
+  if(x){ y=+x[1]; m=+x[2]; d=+x[3]; rest=x[4]; }
+  else if((x = t.match(/^(\d{1,2})[-\/.](\d{1,2})[-\/.](\d{4}|\d{2})(?!\d)(.*)$/))){
+    if(x[3].length===2 && !allow2) return null;
+    m=+x[1]; d=+x[2]; y = x[3].length===2 ? 2000+ +x[3] : +x[3]; rest=x[4];
+  }
+  else if((x = t.match(/^(\d{2})(\d{2})(\d{4})(.*)$/))){ m=+x[1]; d=+x[2]; y=+x[3]; rest=x[4]; }
+  else return null;
+  const dt = new Date(y,m-1,d);
+  if(dt.getFullYear()!==y || dt.getMonth()!==m-1 || dt.getDate()!==d) return null;
+  return {y,m,d,rest};
+}
+function parseTimeText(t){
+  t = t.trim().replace(/^[,T@]\s*|^at\s+/i,"");
+  if(!t) return {h:12,mi:0,assumed:true};
+  const x = t.match(/^(\d{1,2})(?::?(\d{2}))?\s*([ap])\.?\s*m?\.?$/i) || t.match(/^(\d{1,2}):(\d{2})()$/);
+  if(!x) return null;
+  let h=+x[1], mi = x[2]?+x[2]:0;
+  if(mi>59) return null;
+  if(x[3]){ if(h<1||h>12) return null; h = h%12 + (x[3].toLowerCase()==="p"?12:0); }
+  else if(h>23) return null;
+  return {h,mi};
+}
+const fmtTime = (h,mi) => `${p2((h%12)||12)}:${p2(mi)} ${h<12?"AM":"PM"}`;
+function wireDateField(pickId, withTime){
+  const pick=$(pickId), text=$(pickId+"-t"), err=$(pickId+"-t-err");
+  const show = msg => { err.textContent=msg; text.setAttribute("aria-invalid", msg?"true":"false"); };
+  const syncText = () => {
+    const v = pick.value;
+    if(!v){ text.value=""; show(""); return; }
+    const [dp,tp] = v.split("T"), [y,m,d]=dp.split("-");
+    text.value = `${m}/${d}/${y}` + (withTime && tp ? " "+fmtTime(+tp.slice(0,2),+tp.slice(3,5)) : "");
+    show("");
+  };
+  const setPick = v => { if(pick.value!==v){ pick.value=v; pick.dispatchEvent(new Event("input",{bubbles:true})); } };
+  const parse = final => {
+    const t=text.value.trim();
+    if(!t){ show(""); setPick(""); return; }
+    const dp = parseDateText(t, final);
+    if(!dp){ if(final){ show(withTime ? "Use mm/dd/yyyy, with an optional time such as 10:30 AM." : "Use mm/dd/yyyy, for example 09/22/2026."); setPick(""); } return; }
+    const ds = `${dp.y}-${p2(dp.m)}-${p2(dp.d)}`;
+    if(!withTime){
+      if(dp.rest.trim()){ if(final){ show("Use mm/dd/yyyy, for example 09/22/2026."); setPick(""); } return; }
+      show(""); setPick(ds); if(final) syncText(); return;
+    }
+    const tm = parseTimeText(dp.rest);
+    if(!tm){ if(final){ show("Time not recognized. Try 10:30 AM or 14:30."); setPick(""); } return; }
+    show(tm.assumed && final ? "No time entered, so noon is assumed. Add a time for an exact pay-date check." : "");
+    if(tm.assumed && final) text.setAttribute("aria-invalid","false");
+    setPick(`${ds}T${p2(tm.h)}:${p2(tm.mi)}`);
+    if(final && !tm.assumed) syncText();
+    else if(final) text.value = `${p2(dp.m)}/${p2(dp.d)}/${dp.y}`;
+  };
+  text.addEventListener("input",()=>parse(false));
+  text.addEventListener("blur",()=>parse(true));
+  text.addEventListener("keydown",e=>{ if(e.key==="Enter"){ e.preventDefault(); parse(true); } });
+  pick.addEventListener("change",syncText);
+  pick.addEventListener("input",e=>{ if(e.isTrusted) syncText(); });
+  const open = () => { try{ pick.showPicker(); }catch(e){} };
+  pick.addEventListener("click",open);
+  pick.addEventListener("keydown",e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); open(); } });
+  return syncText;
+}
+const dateSync = {};
+[["d-start",0],["d-end",0],["d-ea",0],["d-er",1]].forEach(([id,t])=>{ dateSync[id]=wireDateField(id,!!t); });
+
 /* ---------- Deadline calculator ---------- */
 const today = new Date();
 $("d-end").value = iso(addDays(today,-12));
 $("d-start").value = iso(addDays(today,-15));
+Object.values(dateSync).forEach(f=>f());
+let dTrip = "ovn";
+segGroup("d-tripSeg","t",v=>{ dTrip=v; $("d-ea-wrap").hidden = v!=="ovn"; renderDeadline(); });
 function nextPayday(recv){
   // Received before 12:00 PM Tuesday -> paid that Friday
   let t = new Date(recv); t.setHours(12,0,0,0);
@@ -798,11 +892,23 @@ function renderDeadline(){
   const start=pd($("d-start").value), end=pd($("d-end").value), eaD=pd($("d-ea").value);
   const erS=$("d-er").value, erD = erS ? new Date(erS) : null;
   const ceo=$("d-ceo").checked, a=[];
-  $("k-ea").innerHTML = start ? kd(addDays(start,-1)) : "—";
+  const needEA = dTrip==="ovn";
+  if(needEA){
+    $("k-ea").innerHTML = start ? kd(addDays(start,-1)) : "—";
+    $("k-ea-s").textContent = "Before the travel date";
+  } else {
+    $("k-ea").innerHTML = '<span class="dl">Not required</span>';
+    $("k-ea-s").textContent = dTrip==="dayin" ? "In-region day trip" : "No overnight stay, in Georgia";
+  }
   if(!end){ $("k-40").innerHTML="—"; $("k-60").innerHTML="—"; $("d-alerts").innerHTML=alertsHTML([["","Enter the trip end date to see deadlines."]]); return; }
   const d40=addDays(end,40), d60=addDays(end,60);
   $("k-40").innerHTML=kd(d40); $("k-60").innerHTML=kd(d60);
-  if(start && eaD){
+  if(!needEA){
+    if(dTrip==="dayin") a.push(["ok","No EA needed for an in-region day trip. An EA is required only if the trip involves extraordinary costs, such as a hotel night, and in-region lodging also needs the CFO’s written pre-approval."]);
+    else a.push(["ok","No EA is required: the policy requires one only for overnight or out-of-state travel. The employee responsibilities section does say out-of-region costs should be approved in advance with an EA, so confirm with your supervisor before incurring costs."]);
+    if(ceo) a.push(["","ED/CEO travel needs no approval in any case."]);
+  }
+  if(needEA && start && eaD){
     if(dayDiff(eaD,start)>=1) a.push(["ok",`EA reached Finance ${dayDiff(eaD,start)} day(s) before travel. On time.`]);
     else a.push(["stop","EA reached Finance on or after the travel date. The policy says reimbursement is denied and travel is not authorized."]);
   }
