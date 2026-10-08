@@ -230,6 +230,42 @@ details ul{margin:8px 0 4px;padding-left:22px;font-size:15.5px}
 .flag{border-left:4px solid var(--stop);background:var(--stop-soft);padding:14px 16px;border-radius:0 10px 10px 0;margin-top:14px}
 .flag ul{margin:6px 0 0;padding-left:20px;font-size:15.5px}
 footer{padding:48px 0 40px;color:var(--muted);font-size:14px}
+/* Checklist chapter */
+.ck-controls{display:flex;flex-wrap:wrap;gap:18px 32px;align-items:flex-start;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-bottom:22px}
+.ck-controls .ck-l{display:block;font-weight:600;font-size:15px;margin-bottom:6px}
+.ck-controls .seg button{font-size:14px;padding:7px 10px}
+.ck-opts{display:flex;flex-wrap:wrap;gap:8px}
+.ck-opts label{display:flex;align-items:center;gap:7px;font-size:14.5px;font-weight:600;border:2px solid var(--line);border-radius:8px;padding:6px 10px;background:var(--paper);cursor:pointer}
+.ck-opts label:has(input:checked){border-color:var(--gold);background:var(--gold-soft)}
+.ck-opts input{accent-color:var(--gold);width:16px;height:16px;margin:0}
+.ck-progress{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:8px}
+.ck-progress b{font-family:var(--cond);font-size:22px}
+.ck-meter{flex:1 1 220px;height:12px;border-radius:99px;background:var(--panel);border:1px solid var(--line);overflow:hidden}
+.ck-meter i{display:block;height:100%;width:0;background:var(--pcard);transition:width .2s}
+.ck-actions{display:flex;gap:8px}
+.ck-actions button{font:inherit;font-size:14px;font-weight:600;border:2px solid var(--line);background:var(--paper);color:var(--ink);padding:6px 12px;border-radius:8px;cursor:pointer}
+.ck-actions button:hover{border-color:var(--ink)}
+.ck-group{margin-top:26px}
+.ck-group h3{display:flex;align-items:baseline;gap:10px}
+.ck-group h3 small{font-family:var(--body);font-size:14px;font-weight:600;color:var(--muted)}
+.ck-group[hidden]{display:none}
+.ck-list{list-style:none;margin:10px 0 0;padding:0;display:grid;gap:8px}
+.ck-list li[hidden]{display:none}
+.ck-item{display:grid;grid-template-columns:24px 1fr;gap:12px;align-items:start;padding:11px 14px;border:1px solid var(--line);border-radius:10px;background:var(--paper);cursor:pointer}
+.ck-item input{accent-color:var(--pcard);width:20px;height:20px;margin:2px 0 0;cursor:pointer}
+.ck-item:has(input:checked){background:var(--pcard-soft);border-color:var(--pcard)}
+.ck-item:has(input:checked) .ck-t{color:var(--muted)}
+.ck-item:has(input:focus-visible){outline:2px solid var(--gold);outline-offset:2px}
+.ck-t{font-size:16px;line-height:1.45}
+.ck-t strong{font-weight:700}
+.ck-src{display:block;font-size:13px;color:var(--muted);margin-top:2px}
+.ck-key{border-left:4px solid var(--gold)}
+@media print{
+  .nav,.pager,.ck-controls,.ck-actions,footer{display:none!important}
+  .chapters [data-chapter]:not(#checklist){display:none!important}
+  #checklist{display:block!important}
+  .ck-item{break-inside:avoid}
+}
 .seg button[aria-pressed="true"]{border-color:var(--gold);background:var(--gold-soft)}
 .tabs button[data-w][aria-selected="true"]{border-color:var(--gold)}
 .two-chains{display:grid;grid-template-columns:1fr 1fr;gap:12px}
@@ -327,6 +363,7 @@ table.pd tfoot td{font-weight:700;border-top:2px solid var(--ink)}
       <a href="#compliance">Compliance</a>
       <a href="#roles">Roles</a>
       <a href="#outline">Outline</a>
+      <a href="#checklist">Checklist</a>
     </div>
   </div>
 </nav>
@@ -734,6 +771,44 @@ table.pd tfoot td{font-weight:700;border-top:2px solid var(--ink)}
   </div>
 </section>
 
+<section id="checklist" data-chapter>
+  <h2>Trip checklist</h2>
+  <p class="lede">Every step that decides whether you get reimbursed, in the order you need it. Pick your trip details to see only the items that apply. Items with a gold edge carry the biggest consequences, such as losing reimbursement or repaying ARC.</p>
+
+  <div class="ck-controls">
+    <div>
+      <span class="ck-l" id="ck-trip-l">Trip type</span>
+      <div class="seg" role="group" aria-labelledby="ck-trip-l" id="ck-tripSeg">
+        <button type="button" data-t="ovn" aria-pressed="true">Overnight or out of state</button>
+        <button type="button" data-t="day" aria-pressed="false">Day trip in Georgia</button>
+      </div>
+    </div>
+    <div>
+      <span class="ck-l" id="ck-opt-l">This trip involves</span>
+      <div class="ck-opts" role="group" aria-labelledby="ck-opt-l">
+        <label><input type="checkbox" data-o="air" checked>Flying</label>
+        <label><input type="checkbox" data-o="drive">My own car</label>
+        <label><input type="checkbox" data-o="rental">Rental car</label>
+        <label><input type="checkbox" data-o="adv">Travel advance</label>
+        <label><input type="checkbox" data-o="intl">International</label>
+        <label><input type="checkbox" data-o="appr">I approve EAs or ERs</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="ck-progress" aria-live="polite">
+    <b id="ck-count">0 of 0 done</b>
+    <div class="ck-meter" aria-hidden="true"><i id="ck-bar"></i></div>
+    <div class="ck-actions">
+      <button type="button" id="ck-print">Print</button>
+      <button type="button" id="ck-reset">Clear checks</button>
+    </div>
+  </div>
+
+  <div id="ck-groups"></div>
+  <p class="panel-note" style="margin-top:22px">Checks are saved in this browser only. Section numbers refer to the Expense Authorization, Travel and Reimbursement Policy (revised August 1, 2024); where grant or funding agency rules are stricter, they apply instead.</p>
+</section>
+
 <footer>Summary of ARC Expense Authorization, Travel and Reimbursement Policy (effective May 1, 2018, revised August 1, 2024). The policy document controls in any conflict with this guide. Calculator results are estimates.</footer>
 </main>
 <script>
@@ -1035,6 +1110,94 @@ document.querySelectorAll(".tabs button").forEach(b=>b.addEventListener("click",
   document.querySelectorAll(".tabs button").forEach(x=>x.setAttribute("aria-selected",x===b)); showWF(b.dataset.w);
 }));
 showWF("ea");
+/* ---------- Checklist ---------- */
+const CK = [
+ {g:"Before you book", items:[
+  {id:"b-ea",k:1,w:"ovn",t:"<strong>Get an approved EA in Deltek Costpoint before booking anything.</strong> Finance must receive it before the travel date; a late EA means no reimbursement and no authorization to travel.",s:"Introduction; Expense Authorization"},
+  {id:"b-agenda",w:"ovn",t:"<strong>Attach the agenda or itinerary</strong> to multi-day EAs and state the business purpose: people involved, topics and duties.",s:"Documentation and Receipt Requirements"},
+  {id:"b-24h",w:"ovn",t:"<strong>Add a memo if you arrive or leave 24+ hours outside the event.</strong> Finance decides whether those extra costs are paid.",s:"Documentation and Receipt Requirements; 4.4"},
+  {id:"b-est",k:1,t:"<strong>Build a realistic cost estimate.</strong> Actual costs more than 10% over the EA need the ARC Director’s signature.",s:"6.3"},
+  {id:"b-exc",k:1,t:"<strong>Request any policy exception in advance:</strong> in the EA, with justification, for CFO final approval, or in writing from your Executive to the CFO when no EA is needed.",s:"7.1–7.3"},
+  {id:"b-grant",t:"<strong>Check the grant or funding agency’s travel rules.</strong> Stricter funder rules replace this policy.",s:"Applicability"},
+  {id:"b-dayea",w:"day",t:"<strong>Confirm with your supervisor if the day trip leaves the Atlanta region.</strong> No EA is required, but the policy says out-of-region costs should be approved in advance.",s:"Introduction; Role of the Employee"},
+  {id:"b-pers",t:"<strong>Clear any personal add-on with your supervisor first.</strong> ARC pays no more than the business-only trip would have cost.",s:"6.8"},
+  {id:"b-cat",t:"<strong>Use only the ORT (Overnight Travel) and Misc. Exp/Non-Overnight Travel categories</strong> on the EA and ER.",s:"Expense Report workflow"},
+  {id:"b-adv",w:"adv",t:"<strong>Request the advance with the EA by the AP cutoff.</strong> Up to 100% of the lowest logical airfare; hotel advances are a check to the hotel. Settle any open advance first.",s:"6.2"},
+  {id:"b-intl",w:"intl",t:"<strong>Get dated advance approval from the ED/CEO</strong> (the Board Chair for ED/CEO travel) and keep it for the ER.",s:"Appendix B"}
+ ]},
+ {g:"Booking", items:[
+  {id:"k-fare",k:1,w:"air",t:"<strong>Book the lowest logical airfare from refundable, non-penalty tickets.</strong> If you choose a nonrefundable fare, you pay any change costs.",s:"1.2"},
+  {id:"k-class",w:"air",t:"<strong>Fly economy.</strong> No business or first class domestically except Alaska and Hawaii; upgrades only at your own expense. Skip paid priority seating.",s:"1.3; 1.8"},
+  {id:"k-points",w:"air",t:"<strong>Don’t choose an airline for points or perks</strong> unless it is also the lowest logical fare.",s:"1.2"},
+  {id:"k-fly",w:"intl air",t:"<strong>Use U.S. carriers or code-shares</strong> on federally funded international flights.",s:"1.4; Appendix B"},
+  {id:"k-docs",w:"intl",t:"<strong>Check passport, visa and vaccination needs.</strong> Required costs are reimbursable with receipts.",s:"1.4; Section Five"},
+  {id:"k-drive",k:1,w:"ovn drive",t:"<strong>Driving out of state? Get it approved first.</strong> Air is required unless driving is documented as more cost-efficient or practical and approved before booking.",s:"1.1; 2.1; 7.2"},
+  {id:"k-car",w:"drive",t:"<strong>Use your own car only when fleet vehicles, transit and rentals aren’t reasonable or cost-effective.</strong> Carry a valid license, registration and liability insurance; your insurance covers any damage.",s:"2.2; 2.4"},
+  {id:"k-irs",w:"drive",t:"<strong>Estimate mileage at the current IRS rate minus normal commuting miles.</strong>",s:"2.4; Appendix A"},
+  {id:"k-rent",w:"rental",t:"<strong>Book through ARC’s Enterprise corporate account</strong> and pick the most economical vehicle. Decline extra insurance in Georgia; add it out of state. Rentals over 24 hours need written approval.",s:"2.3"},
+  {id:"k-hotel",w:"ovn",t:"<strong>Pick the least expensive safe lodging near the business site</strong> and ask for the government or conference rate. Avoid deposits and nonrefundable rates unless the conference requires them.",s:"3.1; 3.3; 3.4"},
+  {id:"k-inreg",w:"ovn",t:"<strong>Lodging inside the Atlanta region needs the CFO’s written pre-approval.</strong> Attach it to the ER.",s:"3.1"},
+  {id:"k-pcard",k:1,t:"<strong>Keep travel off the P-Card except conference registration.</strong> Other travel charges on the P-Card lead to discipline and repayment.",s:"6.1; Documentation and Receipt Requirements"}
+ ]},
+ {g:"During the trip", items:[
+  {id:"d-rcpt",k:1,t:"<strong>Keep itemized receipts</strong> showing vendor, date, items and total for airfare, hotel, rental car, rail, registration and anything over $25.",s:"6.6"},
+  {id:"d-meals",t:"<strong>Note every meal provided</strong> by the conference, hotel or a host; it comes off your per diem.",s:"4.3"},
+  {id:"d-tax",w:"ovn",t:"<strong>Hand the Hotel Occupancy Tax Exemption Form to Georgia hotels at check-in.</strong> If refused, raise it with management before checkout.",s:"3.2"},
+  {id:"d-cancel",w:"ovn",t:"<strong>Cancel on time.</strong> Flights at least one hour before departure; hotels within the cancellation window. No-show fees aren’t reimbursed.",s:"1.5; 3.3"},
+  {id:"d-credit",w:"air",t:"<strong>Use airline credits on your next ARC trip</strong> before they expire.",s:"1.6"},
+  {id:"d-no",t:"<strong>Avoid costs ARC won’t pay:</strong> alcohol, mini-bar, entertainment, upgrades, valet when self-park exists, fines and tickets.",s:"Section Five; 2.1"},
+  {id:"d-fuel",w:"rental",t:"<strong>Never use a rental or fleet vehicle for personal errands.</strong>",s:"2.2; 2.3"}
+ ]},
+ {g:"After the trip", items:[
+  {id:"a-40",k:1,t:"<strong>Get the signed ER to Finance within 40 days.</strong> From day 60 it is not reimbursed, and any special-exception payment after 60 days is taxable.",s:"6.3"},
+  {id:"a-tue",t:"<strong>Submit by noon Tuesday</strong> to be paid by EFT that Friday.",s:"General Provisions; 6.3"},
+  {id:"a-all",k:1,t:"<strong>Account for everything on the ER:</strong> advances, costs ARC paid directly, such as registration and airfare, and your out-of-pocket costs.",s:"6.3"},
+  {id:"a-ret",w:"adv",t:"<strong>Return any unused advance with the ER</strong>, or by payroll deduction.",s:"6.2; 6.3"},
+  {id:"a-pd",w:"ovn",t:"<strong>Claim meals at the GSA per diem:</strong> 75% on first and last days, after subtracting provided meals.",s:"4.4"},
+  {id:"a-pdday",w:"day",t:"<strong>Claim day-trip meals only when eligible:</strong> outside the region and away more than 4 hours, or inside the region after hours, on weekends or on holidays.",s:"4.5; 4.6"},
+  {id:"a-miles",w:"drive",t:"<strong>Claim mileage at the IRS rate minus commuting miles</strong>, with tolls and parking listed separately.",s:"2.4"},
+  {id:"a-purp",t:"<strong>Give a specific business purpose for every expense.</strong>",s:"Documentation and Receipt Requirements"},
+  {id:"a-miss",t:"<strong>Explain any missing receipt in Part 5.</strong> Receipts can be skipped only for parking, tolls, transit, taxis and airport vans under $25 each.",s:"6.4; 6.6"},
+  {id:"a-dup",t:"<strong>Claim each cost only once.</strong>",s:"6.5"},
+  {id:"a-fx",w:"intl",t:"<strong>Convert foreign charges to U.S. dollars</strong> using your card statement or the conversion formula, and attach the dated approvals.",s:"Appendix B"},
+  {id:"a-track",t:"<strong>Track your ER through each approver</strong> and follow up until it is paid.",s:"Role of the Employee"}
+ ]},
+ {g:"For approvers", items:[
+  {id:"r-own",k:1,w:"appr",t:"<strong>Never approve your own EA or ER.</strong>",s:"General Provisions"},
+  {id:"r-rev",w:"appr",t:"<strong>Review every transaction and its documentation</strong> for reasonableness, policy compliance and grant eligibility.",s:"Role of the Supervisor; Budget Manager"},
+  {id:"r-bud",w:"appr",t:"<strong>Confirm budget capacity</strong> in the cost center, counting earlier charges, before approving an EA.",s:"Role of the Budget Manager"},
+  {id:"r-late",w:"appr",t:"<strong>Tell the employee about problems, and when your review is late</strong>, since late processing can make the reimbursement taxable.",s:"Roles and Responsibilities"}
+ ]}
+];
+const CKKEY="arc-travel-checklist-v1";
+let ckState={trip:"ovn",opts:{air:true},done:{}};
+try{ const v=JSON.parse(localStorage.getItem(CKKEY)||"null"); if(v&&v.done) ckState=Object.assign(ckState,v); }catch(e){}
+const ckSave=()=>{ try{ localStorage.setItem(CKKEY,JSON.stringify(ckState)); }catch(e){} };
+$("ck-groups").innerHTML = CK.map((g,gi)=>`<div class="ck-group" data-g="${gi}"><h3>${g.g} <small data-c></small></h3><ul class="ck-list">${g.items.map(it=>`<li data-w="${it.w||""}"><label class="ck-item${it.k?" ck-key":""}"><input type="checkbox" data-id="${it.id}"><span class="ck-t">${it.t}<span class="ck-src">Policy: ${it.s}</span></span></label></li>`).join("")}</ul></div>`).join("");
+const ckApplies = w => !w || w.split(" ").every(t => t==="ovn"||t==="day" ? ckState.trip===t : !!ckState.opts[t]);
+function renderCK(){
+  let total=0, done=0;
+  document.querySelectorAll("#ck-groups .ck-group").forEach(gr=>{
+    let gt=0, gd=0;
+    gr.querySelectorAll("li").forEach(li=>{
+      const show=ckApplies(li.dataset.w), cb=li.querySelector("input");
+      li.hidden=!show; cb.checked=!!ckState.done[cb.dataset.id];
+      if(show){ gt++; if(cb.checked) gd++; }
+    });
+    gr.hidden=!gt; gr.querySelector("[data-c]").textContent=`${gd} of ${gt}`;
+    total+=gt; done+=gd;
+  });
+  $("ck-count").textContent = done===total && total ? `All ${total} done` : `${done} of ${total} done`;
+  $("ck-bar").style.width = total ? (100*done/total)+"%" : "0";
+}
+$("ck-groups").addEventListener("change",e=>{ const id=e.target.dataset.id; if(!id) return; if(e.target.checked) ckState.done[id]=1; else delete ckState.done[id]; ckSave(); renderCK(); });
+document.querySelectorAll("#ck-tripSeg button").forEach(b=>b.setAttribute("aria-pressed", b.dataset.t===ckState.trip?"true":"false"));
+document.querySelectorAll(".ck-opts input").forEach(cb=>{ cb.checked=!!ckState.opts[cb.dataset.o]; cb.addEventListener("change",()=>{ ckState.opts[cb.dataset.o]=cb.checked; ckSave(); renderCK(); }); });
+segGroup("ck-tripSeg","t",v=>{ ckState.trip=v; ckSave(); renderCK(); });
+$("ck-reset").addEventListener("click",()=>{ ckState.done={}; ckSave(); renderCK(); });
+$("ck-print").addEventListener("click",()=>window.print());
+renderCK();
+
 })();
 // Chapters: show one section at a time
 (function(){
