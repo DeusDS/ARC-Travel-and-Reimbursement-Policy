@@ -961,6 +961,9 @@ $("d-start").value = iso(addDays(today,-15));
 Object.values(dateSync).forEach(f=>f());
 let dTrip = "ovn";
 segGroup("d-tripSeg","t",v=>{ dTrip=v; $("d-ea-wrap").hidden = v!=="ovn"; renderDeadline(); });
+document.addEventListener("visibilitychange",()=>{ if(!document.hidden) renderDeadline(); });
+window.addEventListener("focus",()=>renderDeadline());
+setInterval(()=>{ if(!document.hidden) renderDeadline(); }, 60000);
 function nextPayday(recv){
   // Received before 12:00 PM Tuesday -> paid that Friday
   let t = new Date(recv); t.setHours(12,0,0,0);
@@ -993,20 +996,31 @@ function renderDeadline(){
     else a.push(["stop","EA reached Finance on or after the travel date. The policy says reimbursement is denied and travel is not authorized."]);
   }
   if(start && end && dayDiff(start,end)<0) a.push(["stop","Trip end date is before the start date."]);
-  const ref = erD || today, day = dayDiff(end,ref);
+  const now = new Date(), ref = erD || now, day = dayDiff(end,ref);
   const pin=$("tl-pin"); const pos = Math.max(0,Math.min(80,day))/80*100;
   pin.style.left = pos+"%"; const pl=$("tl-pin-l"); pl.style.left = pos<10 ? "0" : pos>90 ? "auto" : "50%"; pl.style.right = pos>90 ? "0" : "auto"; pl.style.transform = (pos<10||pos>90) ? "none" : "translateX(-50%)"; $("tl-pin-l").textContent = (erD?"ER received":"Today")+`: day ${day}`;
   if(day<0) a.push(["",`${erD?"ER date":"Today"} is before the trip ended.`]);
+  else if(day===40) a.push([erD?"ok":"warn",erD?"ER arrives on day 40, the last on-time day. On time.":"Today is day 40, the last on-time day. The signed ER must reach Finance today."]);
   else if(day<=40) a.push(["ok",`${erD?"ER arrives":"Today is"} on day ${day}. ${erD?"On time.":`You have ${40-day} day(s) left to get the signed ER to Finance.`}`]);
   else if(day<60) a.push(["stop",`Day ${day}: past the 40-day deadline. The ER may not be paid. You can ask the CFO to pay it late; approval is at their discretion and may come with discipline. If it is processed at day 60 or later, it becomes taxable income on your W-2. ${60-day} day(s) remain before the final cutoff.`]);
   else a.push(["stop",`Day ${day}: 60 days or more. The ER will not be considered for reimbursement. A special-exception payment after 60 days is taxable income.`]);
   if(erD){
     const p=nextPayday(erD);
     a.push(["",`Estimated EFT pay date: <strong>${fd(p.pay)}</strong> <span class="sdi">(${fs(p.pay)})</span>. Finance cutoff: ${fb(p.cutoff)} at 12:00 PM, if all signatures and receipts are complete.`]);
-  } else {
-    const lastTue = new Date(d40); lastTue.setDate(lastTue.getDate()-((lastTue.getDay()-2+7)%7));
-    a.push(["",`To be paid without hitting day 40, the ER has to reach Finance by ${fb(d40)}. Arriving by noon on ${fb(lastTue)} means payment on ${fb(addDays(lastTue,3))}.`]);
+  } else if(day<=40){
+    const lastTue = new Date(d40); lastTue.setDate(lastTue.getDate()-((lastTue.getDay()-2+7)%7)); lastTue.setHours(12,0,0,0);
+    if(lastTue > now) a.push(["",`To be paid without hitting day 40, the ER has to reach Finance by ${fb(d40)}. Arriving by noon on ${fb(lastTue)} means payment on ${fb(addDays(lastTue,3))}.`]);
+    else { const p=nextPayday(now); a.push(["",`The last Tuesday cutoff before day 40 has passed. An ER that reaches Finance by ${fb(d40)} is still on time and would be paid on the next pay date, ${fb(p.pay)}.`]); }
+  } else if(day<60){
+    const p=nextPayday(now); let last=addDays(d60,-1); while(last.getDay()===0||last.getDay()===6) last=addDays(last,-1);
+    let m=`Even with CFO approval for late payment, the ER must reach Finance before day 60; the last business day before then is ${fb(last)}.`;
+    if(dayDiff(end,p.cutoff)<60) m+=` Arriving before noon on ${fb(p.cutoff)} means the earliest pay date is ${fb(p.pay)}`;
+    else m+=` Arriving now, the next pay date is ${fb(p.pay)}`;
+    m += dayDiff(end,p.pay)>=60 ? ", which is after day 60, so the payment would be taxable income." : ".";
+    a.push(["",m]);
   }
+  const wk = d => d.getDay()===6 ? 1 : d.getDay()===0 ? 2 : 0;
+  if(day<=40 && wk(d40)) a.push(["warn",`Day 40 falls on a ${d40.getDay()===6?"Saturday":"Sunday"}. The policy doesn’t extend the deadline, so plan for the ER to reach Finance by ${fb(addDays(d40,-wk(d40)))}.`]);
   a.push(["","The ER must account for everything: advances, costs ARC paid directly (registration, transportation) and out-of-pocket costs."]);
   if(ceo) a.push(["","For the ED/CEO, the designee files the ER within the same 40 days, and the expenses go to the Board Chair for quarterly review."]);
   $("d-alerts").innerHTML=alertsHTML(a);
